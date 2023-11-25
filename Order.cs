@@ -42,4 +42,30 @@ using System.Collections;
     public void removeItem(Item olditem) {
         orderlist.Remove(olditem);
     }
+
+
+
+
+    public class Carryout : Order
+    {
+
+    }
+
+    public class Delivery : Order
+    {
+        private string address;
+
+        public string getAddress()
+        {
+            return address;
+        }
+    }
 }
+
+
+
+
+
+
+
+
