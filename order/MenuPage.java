@@ -1,4 +1,6 @@
-package gui;
+package user.order;
+
+import user.user.gui.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +37,6 @@ private void addComponentsToPane(Container pane, String firstName, String lastNa
     JButton classicsButton = createCategoryButton("Classics", "classics_image.png");
     categoriesPanel.add(classicsButton);
 
-    // Specialties category
   // Specialties category
 JButton specialtiesButton = createCategoryButton("Specialties", "specialties_image.png");
 specialtiesButton.setFont(new Font("Arial", Font.BOLD, 12)); // Decreased font size

@@ -1,17 +1,17 @@
-package gui;
+package user.user.gui;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class RewardsPage extends JFrame {
+public class DealsPage extends JFrame {
 
-    public RewardsPage(String firstName, String lastName) {
-        super("The Urban Slice Rewards");
+    public DealsPage(String firstName, String lastName) {
+        super("The Urban Slice Deals");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        addComponentsToPane(getContentPane(), firstName, lastName, "Rewards");
+        addComponentsToPane(getContentPane(), firstName, lastName, "Deals");
     }
 
     private void addComponentsToPane(Container pane, String firstName, String lastName, String category) {
@@ -22,51 +22,68 @@ public class RewardsPage extends JFrame {
         JPanel headerPanel = createHeaderPanel(firstName, lastName);
         pane.add(headerPanel, BorderLayout.NORTH);
 
-        // Content specific to Rewards page
+        // Content specific to Deals page
         JLabel categoryLabel = new JLabel(category);
         categoryLabel.setFont(new Font("Arial", Font.BOLD, 18));
         categoryLabel.setHorizontalAlignment(JLabel.CENTER);
         pane.add(categoryLabel, BorderLayout.CENTER);
 
-        // Add the rewards content area
-        JPanel rewardsPanel = createRewardsPanel();
-        pane.add(rewardsPanel, BorderLayout.CENTER);
+        // Add the deals area
+        JPanel dealsPanel = createDealsPanel();
+        pane.add(dealsPanel, BorderLayout.CENTER);
 
         // Add the footer
         JPanel footerPanel = createFooterPanel();
         pane.add(footerPanel, BorderLayout.SOUTH);
     }
 
-    private JPanel createRewardsPanel() {
-        JPanel rewardsPanel = new JPanel(new BorderLayout());
-        rewardsPanel.setBackground(new Color(173, 216, 230)); // Set blue background color
+ private JPanel createDealsPanel() {
+    JPanel dealsPanel = new JPanel(new BorderLayout());
+    dealsPanel.setBackground(new Color(173, 216, 230)); // Set blue background color
 
-        // Rewards Content
-        JTextArea rewardsText = new JTextArea();
-        rewardsText.setFont(new Font("Arial", Font.PLAIN, 16));
-        rewardsText.setLineWrap(true);
-        rewardsText.setWrapStyleWord(true);
-        rewardsText.setEditable(false);
+    // Title
+    JLabel titleLabel = new JLabel("Current Deals");
+    titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+    titleLabel.setHorizontalAlignment(JLabel.CENTER);
+    dealsPanel.add(titleLabel, BorderLayout.NORTH);
 
-        // Customize the rewards content here
-        rewardsText.setText("Join our rewards program and earn points with every purchase!\n" +
-                "Redeem points for discounts and special offers.");
+    // Deals Content
+    JTextArea dealsText = new JTextArea();
+    dealsText.setFont(new Font("Arial", Font.PLAIN, 16));
+    dealsText.setLineWrap(true);
+    dealsText.setWrapStyleWord(true);
+    dealsText.setEditable(false);
 
-        JScrollPane scrollPane = new JScrollPane(rewardsText);
-        rewardsPanel.add(scrollPane, BorderLayout.CENTER);
-
-        return rewardsPanel;
+    // Check if there are deals
+    if (!hasDeals()) {
+        dealsText.setText("No current promotions available, but our pizzas are always made with the freshest ingredients and served with a smile! "
+                + "Check back soon for exciting offers and new deals.");
+    } else {
+        // Customize the deals content here
+        dealsText.setText("1. Two for Tuesday: Buy one pizza, get one free!\n" +
+                "2. Family Feast: Large pizza, garlic knots, and a 2-liter soda for $25.\n" +
+                "3. Lunch Special: Any personal pizza and a drink for $10.\n" +
+                "4. Dessert Delight: Free dessert with any order of $30 or more.");
     }
 
-    // Header and Footer methods similar to other classes
+    JScrollPane scrollPane = new JScrollPane(dealsText);
+    dealsPanel.add(scrollPane, BorderLayout.CENTER);
 
-    protected JPanel createHeaderPanel(String firstName, String lastName) {
+    return dealsPanel;
+}
+private boolean hasDeals() {
+    // Implement your logic to check if there are current deals
+    // For simplicity, I'm assuming there are no deals at the moment
+    return false;
+}
+
+    private JPanel createHeaderPanel(String firstName, String lastName) {
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BorderLayout());
         headerPanel.setBackground(new Color(255, 204, 102)); // Light orange background color
 
         // Logo on the left
-        ImageIcon logoIcon = new ImageIcon("C:\\Users\\ebend\\OneDrive\\Desktop\\VsCode Projects\\TheUrbanSlice\\gui\\images\\MicrosoftTeams-image.png");
+        ImageIcon logoIcon = new ImageIcon("gui/images/MicrosoftTeams-image.png");
         Image logoImage = logoIcon.getImage();
         int logoSize = 80;
         Image resizedLogo = logoImage.getScaledInstance(logoSize, logoSize, Image.SCALE_SMOOTH);
@@ -93,30 +110,32 @@ public class RewardsPage extends JFrame {
         menuButton.addActionListener(e -> {
             MenuPage menuPage = new MenuPage(firstName, lastName);
             menuPage.setVisible(true);
-            RewardsPage.this.dispose(); // Close the current page
+            DealsPage.this.dispose(); // Close the current page
         });
         buttonsPanel.add(menuButton);
 
-        // "DEALS" button
+        // "DEALS" button (Active page, can be styled differently)
         JButton dealsButton = new JButton("DEALS");
         dealsButton.setFont(new Font("Arial", Font.BOLD, 12));
-        dealsButton.addActionListener(e -> {
-            DealsPage dealsPage = new DealsPage(firstName, lastName);
-            dealsPage.setVisible(true);
-            RewardsPage.this.dispose(); // Close the current page
-        });
+        dealsButton.setEnabled(false); // Deals page is active, so disable the button
         buttonsPanel.add(dealsButton);
 
-        // "REWARDS" button (Active page, can be styled differently)
-        JButton rewardsButton = new JButton("REWARDS");
-        rewardsButton.setFont(new Font("Arial", Font.BOLD, 12));
-        rewardsButton.setEnabled(false); // Rewards page is active, so disable the button
-        buttonsPanel.add(rewardsButton);
+        // "REWARDS" button
+       JButton rewardsButton = new JButton("REWARDS");
+    rewardsButton.setFont(new Font("Arial", Font.BOLD, 12));
+    rewardsButton.addActionListener(e -> {
+        RewardsPage rewardsPage = new RewardsPage("John", "Doe");
+        rewardsPage.setVisible(true);
+        this.dispose(); // Close the current page
+    });
+    buttonsPanel.add(rewardsButton);
+
+
 
         // "Cart" button
         JButton cartButton = new JButton("Cart");
         cartButton.setFont(new Font("Arial", Font.BOLD, 12));
-        cartButton.addActionListener(e -> JOptionPane.showMessageDialog(RewardsPage.this, "Cart button clicked"));
+        cartButton.addActionListener(e -> JOptionPane.showMessageDialog(DealsPage.this, "Cart button clicked"));
         buttonsPanel.add(cartButton);
 
         headerPanel.add(buttonsPanel, BorderLayout.EAST);
@@ -124,7 +143,7 @@ public class RewardsPage extends JFrame {
         return headerPanel;
     }
 
-    protected JPanel createFooterPanel() {
+    private JPanel createFooterPanel() {
         JPanel footerPanel = new JPanel();
         footerPanel.setBackground(new Color(51, 51, 51));
         footerPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
@@ -139,6 +158,6 @@ public class RewardsPage extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new RewardsPage("John", "Doe").setVisible(true));
+        SwingUtilities.invokeLater(() -> new DealsPage("John", "Doe").setVisible(true));
     }
 }

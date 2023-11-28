@@ -1,4 +1,8 @@
-package gui;
+package user.user;
+
+import user.order.MenuPage;
+import user.user.gui.LoginDialog;
+import user.user.gui.SignUpDialog;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,10 +1,12 @@
-package gui;
+package user.user.gui;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CreateYourOwnPizzaPage extends JFrame {
     private Map<String, Map<String, List<String>>> pizzaOptions;

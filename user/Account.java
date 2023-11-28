@@ -1,4 +1,4 @@
-package user;
+package user.user;
 
 public class Account {
     protected static long accountID = 0;
