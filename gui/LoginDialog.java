@@ -1,6 +1,4 @@
-package user.user.gui;
-
-import user.user.Account;
+package user.gui;
 
 import javax.swing.*;
 import java.awt.*;
