@@ -1,7 +1,8 @@
 package user.user;
 
-import user.order.MenuPage;
+
 import user.user.gui.LoginDialog;
+import user.user.gui.MenuPage;
 import user.user.gui.SignUpDialog;
 
 import javax.swing.*;
@@ -92,7 +93,7 @@ public class LoginGUI {
     }
 
     private void openMenuPage() {
-        MenuPage menuPage = new MenuPage(Account.getName()); // Replace with actual user information
+        MenuPage menuPage = new MenuPage(Account.getFirstName(),Account.getLastName()); // Replace with actual user information
         menuPage.setVisible(true);
         frame.dispose(); // Close the login page
     }

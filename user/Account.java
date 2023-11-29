@@ -4,15 +4,19 @@ public class Account {
     protected static long accountID = 0;
     protected static long phoneNumber;
     protected static String email;
-    protected static String name;
+    protected static String firstname;
+    protected static String lastname;
 
-    public Account(long phoneNumber, String email, String name) {
+    public Account(long phoneNumber, String email, String firstname, String lastname) {
         this.accountID++;
         this.phoneNumber = phoneNumber;
         this.email = email;
-        this.name = name;
+        this.firstname = firstname;
+        this.lastname = lastname;
     }
-    public static String getName(){return name;}
+    public static String getFirstName(){return firstname;}
+    public static String getLastName(){return lastname;}
+
     public long getAccount() {
         return accountID;
     }
