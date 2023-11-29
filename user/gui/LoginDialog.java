@@ -1,5 +1,7 @@
 package user.user.gui;
 
+import user.user.Account;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -50,6 +52,7 @@ public class LoginDialog extends JDialog {
         // Placeholder method for handling Sign In button click
         String username = usernameField.getText();
         char[] password = passwordField.getPassword();
+       // Account newaccount = new Account();
 
         // Perform login logic (replace this with your actual login logic)
         if (loginSuccessful(username, password)) {

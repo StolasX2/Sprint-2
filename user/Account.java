@@ -2,15 +2,17 @@ package user.user;
 
 public class Account {
     protected static long accountID = 0;
-    protected long phoneNumber;
-    protected String email;
+    protected static long phoneNumber;
+    protected static String email;
+    protected static String name;
 
-    public Account(long phoneNumber, String email) {
+    public Account(long phoneNumber, String email, String name) {
         this.accountID++;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.name = name;
     }
-
+    public static String getName(){return name;}
     public long getAccount() {
         return accountID;
     }

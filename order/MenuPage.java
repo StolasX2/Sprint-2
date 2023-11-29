@@ -1,5 +1,6 @@
 package user.order;
 
+import user.menu.CartPage;
 import user.user.gui.*;
 
 import javax.swing.*;
@@ -8,21 +9,21 @@ import java.awt.*;
 public class MenuPage extends JFrame {
     private JLabel welcomeLabel;
 
-    public MenuPage(String firstName, String lastName) {
+    public MenuPage(String firstName) {
         super("The Urban Slice Menu");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        addComponentsToPane(getContentPane(), firstName, lastName);
+        addComponentsToPane(getContentPane(), firstName);
     }
 
 
-private void addComponentsToPane(Container pane, String firstName, String lastName) {
+private void addComponentsToPane(Container pane, String firstName) {
     pane.setLayout(new BorderLayout());
 
     // Add the header
-    JPanel headerPanel = createHeaderPanel(firstName, lastName);
+    JPanel headerPanel = createHeaderPanel(firstName);
     pane.add(headerPanel, BorderLayout.NORTH);
 
     // "Start your Order" text
@@ -121,7 +122,7 @@ private void handleCreateYourOwn() {
     createYourOwnPage.setVisible(true);
     this.dispose(); // Close the current MenuPage
 }
-protected JPanel createHeaderPanel(String firstName, String lastName) {
+protected JPanel createHeaderPanel(String firstName) {
     JPanel headerPanel = new JPanel();
     headerPanel.setLayout(new BorderLayout());
     headerPanel.setBackground(new Color(255, 204, 102)); // Light orange background color
@@ -138,7 +139,7 @@ protected JPanel createHeaderPanel(String firstName, String lastName) {
     headerPanel.add(logoLabel, BorderLayout.WEST);
 
     // Greeting label in the center
-    JLabel greetingLabel = new JLabel("Hi, " + firstName + " " + lastName + "!");
+    JLabel greetingLabel = new JLabel("Hi, " + firstName + "!");
     greetingLabel.setFont(new Font("Arial", Font.BOLD, 18));
     greetingLabel.setHorizontalAlignment(JLabel.CENTER);
     greetingLabel.setForeground(new Color(51, 51, 51));
@@ -154,7 +155,7 @@ protected JPanel createHeaderPanel(String firstName, String lastName) {
     JButton menuButton = new JButton("MENU");
     menuButton.setFont(new Font("Arial", Font.BOLD, 12));
     menuButton.addActionListener(e -> {
-        MenuPage menuPage = new MenuPage("John", "Doe");
+        MenuPage menuPage = new MenuPage("John");
         menuPage.setVisible(true);
         this.dispose(); // Close the current page
     });
@@ -185,7 +186,11 @@ JButton rewardsButton = new JButton("REWARDS");
     // "Cart" button
     JButton cartButton = new JButton("Cart");
     cartButton.setFont(new Font("Arial", Font.BOLD, 12));
-    cartButton.addActionListener(e -> JOptionPane.showMessageDialog(MenuPage.this, "Cart button clicked"));
+    cartButton.addActionListener(e -> {
+        CartPage cartPage = new CartPage(firstName, CartPage.cartItems);
+        cartPage.setVisible(true);
+        this.dispose();
+    });
     buttonsPanel.add(cartButton);
 
     headerPanel.add(buttonsPanel, BorderLayout.EAST);
@@ -210,6 +215,6 @@ JButton rewardsButton = new JButton("REWARDS");
     
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new MenuPage("John", "Doe").setVisible(true));
+        SwingUtilities.invokeLater(() -> new MenuPage("John").setVisible(true));
     }
 }

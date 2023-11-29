@@ -92,7 +92,7 @@ public class LoginGUI {
     }
 
     private void openMenuPage() {
-        MenuPage menuPage = new MenuPage("John", "Doe"); // Replace with actual user information
+        MenuPage menuPage = new MenuPage(Account.getName()); // Replace with actual user information
         menuPage.setVisible(true);
         frame.dispose(); // Close the login page
     }
