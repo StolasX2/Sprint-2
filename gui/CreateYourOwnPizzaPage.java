@@ -100,7 +100,7 @@ private String getPizzaOptionKey(int index) {
         JPanel bodyPanel = new JPanel(new BorderLayout());
         bodyPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEmptyBorder(20, 20, 20, 20), // Empty border within the TitledBorder
-                "Your Titled Border",
+                "Create your Own!",
                 TitledBorder.CENTER, // Title position (you can use TitledBorder.LEFT, TitledBorder.RIGHT, etc.)
                 TitledBorder.TOP, // Title justification (you can use TitledBorder.CENTER, TitledBorder.LEFT, TitledBorder.RIGHT, etc.)
                 new Font("Arial", Font.BOLD, 14), // Title font
