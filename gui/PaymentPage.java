@@ -189,7 +189,7 @@ private JPanel createContentPanel() {
     }
         private JPanel createOrderDetailsPanel() {
         JPanel orderDetailsPanel = new JPanel();
-        orderDetailsPanel.setLayout(new GridLayout(Order.getItemList().size(), 1));
+        //orderDetailsPanel.setLayout(new GridLayout(Order.getItemList().size(), 1));
 
         for (Item item : Order.getItemList()) {
             JLabel itemLabel = new JLabel(item.toString());

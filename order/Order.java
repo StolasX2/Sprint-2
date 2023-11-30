@@ -14,6 +14,7 @@ public class Order {
         ordernum = ordernum++;
     }
 
+
     public float getTotal() {
         return checkouttotal;
     }
