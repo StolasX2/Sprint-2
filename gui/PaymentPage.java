@@ -10,7 +10,10 @@ import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
+import static user.gui.CartPage.cartItems;
+
 public class PaymentPage extends JFrame {
+    order.Payment pay;
 
     private final CartPage cartPage;
 
@@ -62,26 +65,6 @@ public class PaymentPage extends JFrame {
             PaymentPage.this.dispose(); // Close the current page
         });
         buttonsPanel.add(menuButton);
-
-        // "DEALS" button
-        JButton dealsButton = new JButton("DEALS");
-        dealsButton.setFont(new Font("Arial", Font.BOLD, 12));
-        dealsButton.addActionListener(e -> {
-            DealsPage dealsPage = new DealsPage(firstName, lastName);
-            dealsPage.setVisible(true);
-            PaymentPage.this.dispose(); // Close the current page
-        });
-        buttonsPanel.add(dealsButton);
-
-        // "REWARDS" button
-        JButton rewardsButton = new JButton("REWARDS");
-        rewardsButton.setFont(new Font("Arial", Font.BOLD, 12));
-        rewardsButton.addActionListener(e -> {
-            RewardsPage rewardsPage = new RewardsPage(firstName, lastName);
-            rewardsPage.setVisible(true);
-            PaymentPage.this.dispose(); // Close the current page
-        });
-        buttonsPanel.add(rewardsButton);
 
         // "Cart" button
         JButton cartButton = new JButton("Cart");
@@ -343,7 +326,7 @@ private JPanel createContentPanel() {
     }
 
    private double calculateBalanceDue() {
-    return cartPage.calculateSubtotal(); // Assuming you have a method to calculate the total in CartPage
+    return cartPage.calculateSubtotal();
 }
     private void handlePaymentButtonClick(double orderTotal, boolean creditCard, boolean payPal, boolean cashOnDelivery) {
         // Handle payment logic here based on selected options
@@ -352,14 +335,15 @@ private JPanel createContentPanel() {
     }
 
     public static void main(String[] args) {
+
            Order newOrder = new Order();
         // Sample cart items
-        List<Item> cartItems = new java.util.ArrayList<>();
+
         cartItems.add(new Pizza("Large", 12.99f,"Pizza"));
         cartItems.add(new Dessert(5.99f, "Brownie" ));
 
         SwingUtilities.invokeLater(() -> {
-            CartPage cartPage = new CartPage("John", "doe", (LinkedList<Item>) cartItems);
+            CartPage cartPage = new CartPage("John", "doe",  cartItems);
             PaymentPage paymentPage = new PaymentPage("John", "Doe", cartPage);
             cartPage.setVisible(true);
             paymentPage.setVisible(true);

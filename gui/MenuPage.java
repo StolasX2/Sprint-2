@@ -27,7 +27,6 @@ private void addComponentsToPane(Container pane, String firstName, String lastNa
     pane.add(headerPanel, BorderLayout.NORTH);
 
     // "Start your Order" text
- 
 
     // Menu categories panel
     JPanel categoriesPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0)); // Added spacing between buttons
@@ -38,23 +37,11 @@ private void addComponentsToPane(Container pane, String firstName, String lastNa
     JButton classicsButton = createCategoryButton("Classics", "classics_image.png");
     categoriesPanel.add(classicsButton);
 
-    // Specialties category
-  // Specialties category
-JButton specialtiesButton = createCategoryButton("Specialties", "specialties_image.png");
-specialtiesButton.setFont(new Font("Arial", Font.BOLD, 12)); // Decreased font size
-categoriesPanel.add(specialtiesButton);
-
-
-    // Desserts category
-    JButton dessertsButton = createCategoryButton("Desserts", "desserts_image.png");
-    categoriesPanel.add(dessertsButton);
-
-
-// Beverages category
-JButton beveragesButton = createCategoryButton("Beverages", "beverages_image.png");
-beveragesButton.setFont(new Font("Arial", Font.BOLD, 12)); // Decreased font size
-beveragesButton.addActionListener(e -> handleCategorySelection("Beverages")); // Redirect to BeveragesPage
-categoriesPanel.add(beveragesButton);
+    // Beverages category
+    JButton beveragesButton = createCategoryButton("Beverages", "beverages_image.png");
+    beveragesButton.setFont(new Font("Arial", Font.BOLD, 12)); // Decreased font size
+    beveragesButton.addActionListener(e -> handleCategorySelection("Beverages")); // Redirect to BeveragesPage
+    categoriesPanel.add(beveragesButton);
 
 
 
@@ -106,11 +93,7 @@ categoriesPanel.add(beveragesButton);
                 specialtiesPage.setVisible(true);
                 this.dispose();
                 break;
-            case "Desserts":
-                DessertsPage dessertsPage = new DessertsPage("John", "Doe");
-                dessertsPage.setVisible(true);
-                this.dispose();
-                break;
+
             default:
                 JOptionPane.showMessageDialog(this, "Unknown category: " + categoryName);
         }
@@ -162,26 +145,6 @@ protected JPanel createHeaderPanel(String firstName, String lastName) {
         this.dispose(); // Close the current page
     });
     buttonsPanel.add(menuButton);
-
-    // "DEALS" button
-    JButton dealsButton = new JButton("DEALS");
-    dealsButton.setFont(new Font("Arial", Font.BOLD, 12));
-    dealsButton.addActionListener(e -> {
-        DealsPage dealsPage = new DealsPage("John", "Doe");
-        dealsPage.setVisible(true);
-        this.dispose(); // Close the current page
-    });
-    buttonsPanel.add(dealsButton);
-
-    // "REWARDS" button
-JButton rewardsButton = new JButton("REWARDS");
-    rewardsButton.setFont(new Font("Arial", Font.BOLD, 12));
-    rewardsButton.addActionListener(e -> {
-        RewardsPage rewardsPage = new RewardsPage("John", "Doe");
-        rewardsPage.setVisible(true);
-        this.dispose(); // Close the current page
-    });
-    buttonsPanel.add(rewardsButton);
 
 
 

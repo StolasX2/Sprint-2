@@ -6,6 +6,8 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import static user.gui.CartPage.cartItems;
+
 public class BeveragesPage extends JFrame {
 
     private final String[] drinkCategories = {"Sprite", "CocaCola", "Mountain Dew", "Water", "Fanta Orange"};
@@ -143,22 +145,25 @@ public class BeveragesPage extends JFrame {
                     price = 0.0f;
                     break;
             }
-            newdrink.setCost(price);
-            String message = "Item successfully added to cart:\n"
-                    + "Drink Category: " + drinkCategory + "\n"
-                    + "Size: " + selectedSize + "\n"
-                    + "Price: $" + price;
-            JOptionPane.showMessageDialog(this, message);
+
+
         }
     }
 
     private void handleOrderButtonClick(String drinkCategory) {
-        newdrink.setName(drinkCategory);
-        newdrink.setCost(price);
+        if(price > 0) {
+            newdrink.setName(drinkCategory);
+            newdrink.setCost(price);
+            CartPage.cartItems.add(newdrink);
+            String message = "Item successfully added to cart: " + drinkCategory;
+            JOptionPane.showMessageDialog(this, message);
+        }
+        else{
+            String message = "Please select a size";
+            JOptionPane.showMessageDialog(this, message);
+        }
 
-        CartPage.cartItems.add(newdrink);
-        String message = "Item successfully added to cart: " + drinkCategory;
-        JOptionPane.showMessageDialog(this, message);
+
     }
 
     private void handleDrinkButtonClick(String firstName, String lastName, String drinkCategory, int index) {
@@ -204,29 +209,15 @@ public class BeveragesPage extends JFrame {
         });
         buttonsPanel.add(menuButton);
 
-        JButton dealsButton = new JButton("DEALS");
-        dealsButton.setFont(new Font("Arial", Font.BOLD, 12));
-        dealsButton.addActionListener(e -> {
-            DealsPage dealsPage = new DealsPage("John", "Doe");
-            dealsPage.setVisible(true);
-            BeveragesPage.this.dispose();
-        });
-        buttonsPanel.add(dealsButton);
-
-        JButton rewardsButton = new JButton("REWARDS");
-        rewardsButton.setFont(new Font("Arial", Font.BOLD, 12));
-        rewardsButton.addActionListener(e -> {
-            RewardsPage rewardsPage = new RewardsPage("John", "Doe");
-            rewardsPage.setVisible(true);
-            BeveragesPage.this.dispose();
-        });
-        buttonsPanel.add(rewardsButton);
 
         JButton cartButton = new JButton("Cart");
         cartButton.setFont(new Font("Arial", Font.BOLD, 12));
-        cartButton.addActionListener(e -> JOptionPane.showMessageDialog(BeveragesPage.this, "Cart button clicked"));
+        cartButton.addActionListener(e -> {
+            CartPage cartpage = new CartPage("Jon", "Doe", cartItems);
+            cartpage.setVisible(true);
+            this.dispose();
+        });
         buttonsPanel.add(cartButton);
-
         headerPanel.add(buttonsPanel, BorderLayout.EAST);
 
         return headerPanel;

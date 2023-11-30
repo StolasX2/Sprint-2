@@ -1,9 +1,23 @@
 package user.gui;
 
+import user.order.Item;
+import user.order.Pizza;
+
 import javax.swing.*;
 import java.awt.*;
 
+import static user.gui.CartPage.cartItems;
+
 public class ClassicsPage extends JFrame {
+    Item newpizza;
+    float smallprice = 13.99f;
+    float mediumprice = 15.99f;
+
+    float largeprice = 17.99f;
+
+    float xlprice = 21.99f;
+    float price;
+
 
     public ClassicsPage(String firstName, String lastName) {
         super("The Urban Slice Classics");
@@ -50,20 +64,17 @@ private JPanel createPizzaButtonsPanel(String firstName, String lastName) {
             "C:\\Users\\ebend\\OneDrive\\Desktop\\VsCode Projects\\TheUrbanSlice\\gui\\images\\5ff33d7df72e71d8755784135a6e6edd.jpg",
             "C:\\Users\\ebend\\OneDrive\\Desktop\\VsCode Projects\\TheUrbanSlice\\gui\\images\\DSC_0905-min.png"};
 
-    double[] smallPrices = {13.99, 13.99, 13.99, 13.99, 13.99};
-    double[] mediumPrices = {15.99, 15.99, 15.99, 15.99, 15.99};
-    double[] largePrices = {17.99, 17.99, 17.99, 17.99, 17.99};
- double[] xlPrices = {21.99, 21.99, 21.99, 21.99, 21.99}; 
+
     for (int i = 0; i < pizzaTypes.length; i++) {
         JPanel pizzaPanel = new JPanel();
         pizzaPanel.setLayout(new BoxLayout(pizzaPanel, BoxLayout.Y_AXIS));
         pizzaPanel.setBackground(new Color(173, 216, 230));
 
         JButton pizzaButton = createPizzaButton(firstName, lastName, pizzaTypes[i], pizzaImages[i],
-                smallPrices[i], mediumPrices[i], largePrices[i], xlPrices[i]);
+                smallprice, mediumprice, largeprice, xlprice);
         pizzaPanel.add(pizzaButton);
 
-        JPanel sizeAndOrderPanel = createSizeAndOrderPanel(pizzaTypes[i], smallPrices[i], mediumPrices[i], largePrices[i], xlPrices[i]);
+        JPanel sizeAndOrderPanel = createSizeAndOrderPanel(pizzaTypes[i], smallprice, mediumprice, largeprice, xlprice);
         pizzaPanel.add(sizeAndOrderPanel);
 
         pizzaButtonsPanel.add(pizzaPanel);
@@ -137,22 +148,21 @@ private void handleSizeButtonClick(String pizzaType, String[] sizes, double smal
     );
 
     if (selectedSize != null) {
-        double price;
         switch (selectedSize) {
             case "Small":
-                price = smallPrice;
+                price = smallprice;
                 break;
             case "Medium":
-                price = mediumPrice;
+                price = mediumprice;
                 break;
             case "Large":
-                price = largePrice;
+                price = largeprice;
                 break;
             case "Extra Large":  // Change the case to match "Extra Large"
-                price = xlPrice;
+                price = xlprice;
                 break;
             default:
-                price = 0.0;
+                price = 0.0f;
                 break;
         }
 
@@ -166,11 +176,6 @@ private void handleSizeButtonClick(String pizzaType, String[] sizes, double smal
                 break;
         }
 
-        String message = "Item successfully added to cart:\n"
-                + "Pizza Type: " + pizzaType + "\n"
-                + "Size: " + sizeLabel + "\n"
-                + "Price: $" + price; // Display the price
-        JOptionPane.showMessageDialog(this, message);
     }
 }
 
@@ -185,6 +190,7 @@ private void handleSizeButtonClick(String pizzaType, String[] sizes, double smal
             return;
         }
 
+       // newpizza = new Pizza();
         // Continue with the order process
         String message = "Item successfully added to cart: " + pizzaType;
         JOptionPane.showMessageDialog(this, message);
@@ -208,10 +214,8 @@ private void handleSizeButtonClick(String pizzaType, String[] sizes, double smal
 
     private void handlePizzaButtonClick(String firstName, String lastName, String pizzaType) {
         // You can customize the behavior when a pizza button is clicked
-        // For example, showing additional information about the pizza
-        // For now, I'm just displaying a message
-        String message = "Pizza button clicked: " + pizzaType;
-        JOptionPane.showMessageDialog(this, message);
+
+       // JOptionPane.showMessageDialog(this, message);
     }
 
 
@@ -262,27 +266,14 @@ private void handleSizeButtonClick(String pizzaType, String[] sizes, double smal
         });
         buttonsPanel.add(menuButton);
 
-        // "DEALS" button
-        JButton dealsButton = new JButton("DEALS");
-        dealsButton.setFont(new Font("Arial", Font.BOLD, 12));
-        dealsButton.addActionListener(e -> JOptionPane.showMessageDialog(ClassicsPage.this, "DEALS button clicked"));
-        buttonsPanel.add(dealsButton);
-
-        // "REWARDS" button
-     JButton rewardsButton = new JButton("REWARDS");
-    rewardsButton.setFont(new Font("Arial", Font.BOLD, 12));
-    rewardsButton.addActionListener(e -> {
-        RewardsPage rewardsPage = new RewardsPage("John", "Doe");
-        rewardsPage.setVisible(true);
-        this.dispose(); // Close the current page
-    });
-    buttonsPanel.add(rewardsButton);
-
-
         // "Cart" button
         JButton cartButton = new JButton("Cart");
         cartButton.setFont(new Font("Arial", Font.BOLD, 12));
-        cartButton.addActionListener(e -> JOptionPane.showMessageDialog(ClassicsPage.this, "Cart button clicked"));
+        cartButton.addActionListener(e -> {
+            CartPage cartpage = new CartPage("Jon", "Doe", cartItems);
+            cartpage.setVisible(true);
+            this.dispose();
+        });
         buttonsPanel.add(cartButton);
 
         headerPanel.add(buttonsPanel, BorderLayout.EAST);

@@ -8,6 +8,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static user.gui.CartPage.cartItems;
+
 public class CreateYourOwnPizzaPage extends JFrame {
     private Map<String, Map<String, List<String>>> pizzaOptions;
     private Iterator<Map.Entry<String, Map<String, List<String>>>> sectionIterator;
@@ -96,7 +98,15 @@ private String getPizzaOptionKey(int index) {
 
     private JPanel createBodyPanel() {
         JPanel bodyPanel = new JPanel(new BorderLayout());
-        bodyPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        bodyPanel.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEmptyBorder(20, 20, 20, 20), // Empty border within the TitledBorder
+                "Your Titled Border",
+                TitledBorder.CENTER, // Title position (you can use TitledBorder.LEFT, TitledBorder.RIGHT, etc.)
+                TitledBorder.TOP, // Title justification (you can use TitledBorder.CENTER, TitledBorder.LEFT, TitledBorder.RIGHT, etc.)
+                new Font("Arial", Font.BOLD, 14), // Title font
+                Color.RED // Title color
+        ));
+
 
         // Display the current section options
         JPanel sectionPanel = createSectionPanel(currentSection, pizzaOptions.get(currentSection));
@@ -249,23 +259,16 @@ private void handleNextButton() {
     });
     buttonsPanel.add(menuButton);
 
-    // "DEALS" button
-    JButton dealsButton = new JButton("DEALS");
-    dealsButton.setFont(new Font("Arial", Font.BOLD, 12));
-    dealsButton.addActionListener(e -> JOptionPane.showMessageDialog(CreateYourOwnPizzaPage.this, "DEALS button clicked"));
-    buttonsPanel.add(dealsButton);
-
-    // "REWARDS" button
-    JButton rewardsButton = new JButton("REWARDS");
-    rewardsButton.setFont(new Font("Arial", Font.BOLD, 12));
-    rewardsButton.addActionListener(e -> JOptionPane.showMessageDialog(CreateYourOwnPizzaPage.this, "REWARDS button clicked"));
-    buttonsPanel.add(rewardsButton);
 
     // "Cart" button
-    JButton cartButton = new JButton("Cart");
-    cartButton.setFont(new Font("Arial", Font.BOLD, 12));
-    cartButton.addActionListener(e -> JOptionPane.showMessageDialog(CreateYourOwnPizzaPage.this, "Cart button clicked"));
-    buttonsPanel.add(cartButton);
+     JButton cartButton = new JButton("Cart");
+     cartButton.setFont(new Font("Arial", Font.BOLD, 12));
+     cartButton.addActionListener(e -> {
+         CartPage cartpage = new CartPage("Jon", "Doe", cartItems);
+         cartpage.setVisible(true);
+         this.dispose();
+     });
+     buttonsPanel.add(cartButton);
 
     headerPanel.add(buttonsPanel, BorderLayout.EAST);
 

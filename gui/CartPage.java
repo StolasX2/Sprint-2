@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CartPage extends JFrame {
 
-
+    Item removeditem;
    public String firstName;
      public String lastName;
     public static LinkedList<Item> cartItems = new LinkedList<Item>();
@@ -20,7 +20,7 @@ public class CartPage extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        this.cartItems = cartItems;
+        CartPage.cartItems = cartItems;
         this.firstName = firstName;
         this.lastName = lastName;
 
@@ -62,26 +62,6 @@ public class CartPage extends JFrame {
             CartPage.this.dispose(); // Close the current page
         });
         buttonsPanel.add(menuButton);
-
-        // "DEALS" button
-        JButton dealsButton = new JButton("DEALS");
-        dealsButton.setFont(new Font("Arial", Font.BOLD, 12));
-        dealsButton.addActionListener(e -> {
-            DealsPage dealsPage = new DealsPage(firstName, lastName);
-            dealsPage.setVisible(true);
-            CartPage.this.dispose(); // Close the current page
-        });
-        buttonsPanel.add(dealsButton);
-
-        // "REWARDS" button
-        JButton rewardsButton = new JButton("REWARDS");
-        rewardsButton.setFont(new Font("Arial", Font.BOLD, 12));
-        rewardsButton.addActionListener(e -> {
-            RewardsPage rewardsPage = new RewardsPage(firstName, lastName);
-            rewardsPage.setVisible(true);
-            CartPage.this.dispose(); // Close the current page
-        });
-        buttonsPanel.add(rewardsButton);
 
         // "Cart" button
         JButton cartButton = new JButton("Cart");
@@ -233,14 +213,14 @@ public JPanel createCartPanel() {
 
         // Remove button on the right
         JButton removeButton = new JButton("Remove");
-        removeButton.addActionListener(e -> handleRemoveButtonClick(item));
+        removeButton.addActionListener(e -> handleRemoveButtonClick(removeditem));
         cartItemPanel.add(removeButton, BorderLayout.EAST);
 
         return cartItemPanel;
     }
 
-    private void handleRemoveButtonClick(List<Item> item) {
-        cartItems.remove(item);
+    private void handleRemoveButtonClick(Item removeditem) {
+        cartItems.remove(removeditem);
         refreshCartPanel();
         JOptionPane.showMessageDialog(this, "Item removed: " + Item.getName());
     }

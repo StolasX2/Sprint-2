@@ -61,25 +61,6 @@ public class OrderConfirmationPage extends JFrame {
         });
         buttonsPanel.add(menuButton);
 
-        // "DEALS" button
-        JButton dealsButton = new JButton("DEALS");
-        dealsButton.setFont(new Font("Arial", Font.BOLD, 12));
-        dealsButton.addActionListener(e -> {
-            DealsPage dealsPage = new DealsPage(firstName, lastName);
-            dealsPage.setVisible(true);
-            OrderConfirmationPage.this.dispose(); // Close the current page
-        });
-        buttonsPanel.add(dealsButton);
-
-        // "REWARDS" button
-        JButton rewardsButton = new JButton("REWARDS");
-        rewardsButton.setFont(new Font("Arial", Font.BOLD, 12));
-        rewardsButton.addActionListener(e -> {
-            RewardsPage rewardsPage =new RewardsPage(firstName, lastName);
-            rewardsPage.setVisible(true);
-            OrderConfirmationPage.this.dispose(); // Close the current page
-        });
-        buttonsPanel.add(rewardsButton);
 
         headerPanel.add(buttonsPanel, BorderLayout.EAST);
 
