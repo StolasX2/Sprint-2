@@ -159,18 +159,17 @@ public class CreateYourOwnPizzaPage extends JFrame {
 
     private void createPizzaAndAddToCart() {
         // Create a Pizza object with selected toppings
+        Pizza pizza = new Pizza("Custom Pizza: ");
         List<Item> selectedToppings = new ArrayList<>();
-        for (Item topping : cartItems) {
-            if (topping.getName().equals("topping")) {
-                selectedToppings.add(topping);
-            }
+        for (Item topping : selectedToppings) {
+           pizza.setName(pizza.name + ", "+topping);
         }
 
         // Create a Pizza object with the selected toppings
-        Pizza pizza = new Pizza("Custom Pizza", selectedToppings);
+
 
         // Add the Pizza to the cart
-        cartItems.add(pizza);
+        CartPage.cartItems.add(pizza);
     }
 
 
@@ -270,7 +269,7 @@ public class CreateYourOwnPizzaPage extends JFrame {
         JButton cartButton = new JButton("Cart");
         cartButton.setFont(new Font("Arial", Font.BOLD, 12));
         cartButton.addActionListener(e -> {
-            CartPage cartpage = new CartPage("Jon", "Doe", cartItems);
+            CartPage cartpage = new CartPage("Jon", "Doe");
             cartpage.setVisible(true);
             this.dispose();
         });

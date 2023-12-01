@@ -13,13 +13,12 @@ public class CartPage extends JFrame {
     public String firstName;
     public String lastName;
     public static LinkedList<Item> cartItems = new LinkedList<Item>();
-    public CartPage(String firstName, String lastName, LinkedList<Item> cartItems) {
+    public CartPage(String firstName, String lastName) {
         super("The Urban Slice Cart");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        CartPage.cartItems = cartItems;
         this.firstName = firstName;
         this.lastName = lastName;
 

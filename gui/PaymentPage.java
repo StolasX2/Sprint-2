@@ -339,10 +339,8 @@ public class PaymentPage extends JFrame {
            Order newOrder = new Order();
         // Sample cart items
 
-        cartItems.add(new Pizza("Large", 12.99f,"Pizza"));
-
         SwingUtilities.invokeLater(() -> {
-            CartPage cartPage = new CartPage("John", "doe",  cartItems);
+            CartPage cartPage = new CartPage("John", "doe");
             PaymentPage paymentPage = new PaymentPage("John", "Doe", cartPage);
             cartPage.setVisible(true);
             paymentPage.setVisible(true);

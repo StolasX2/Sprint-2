@@ -14,7 +14,7 @@ public class Pizza extends Item {
         toppingList = new Topping[4];
     }
 
-    public Pizza(String customPizza, List<Item> selectedToppings) {
+    public Pizza(String customPizza) {
         name = "Custom Pizza";
         cost = 20.99f;
 

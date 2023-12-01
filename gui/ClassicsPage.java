@@ -259,7 +259,7 @@ public class ClassicsPage extends JFrame {
         JButton cartButton = new JButton("Cart");
         cartButton.setFont(new Font("Arial", Font.BOLD, 12));
         cartButton.addActionListener(e -> {
-            CartPage cartpage = new CartPage("Jon", "Doe", cartItems);
+            CartPage cartpage = new CartPage("Jon", "Doe");
             cartpage.setVisible(true);
             this.dispose();
         });
