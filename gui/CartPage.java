@@ -6,15 +6,14 @@ import user.order.*;
 import javax.swing.*;
 import java.awt.*;
 import java.util.LinkedList;
-import java.util.List;
 
 public class CartPage extends JFrame {
 
     Item removeditem;
-   public String firstName;
-     public String lastName;
+    public String firstName;
+    public String lastName;
     public static LinkedList<Item> cartItems = new LinkedList<Item>();
- public CartPage(String firstName, String lastName, LinkedList<Item> cartItems) {
+    public CartPage(String firstName, String lastName, LinkedList<Item> cartItems) {
         super("The Urban Slice Cart");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,7 +25,7 @@ public class CartPage extends JFrame {
 
         addComponentsToPane(getContentPane(), firstName, lastName);
     }
-      private JPanel createHeaderPanel(String firstName, String lastName) {
+    private JPanel createHeaderPanel(String firstName, String lastName) {
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BorderLayout());
         headerPanel.setBackground(new Color(255, 204, 102)); // Light orange background color
@@ -73,7 +72,7 @@ public class CartPage extends JFrame {
 
         return headerPanel;
     }
-  private JPanel createFooterPanel() {
+    private JPanel createFooterPanel() {
         JPanel footerPanel = new JPanel();
         footerPanel.setBackground(new Color(51, 51, 51));
         footerPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
@@ -87,42 +86,42 @@ public class CartPage extends JFrame {
         return footerPanel;
     }
 
- private void addComponentsToPane(Container pane, String firstName, String lastName) {
-    pane.setLayout(new BorderLayout());
-    pane.setBackground(new Color(173, 216, 230)); // Set blue background color
+    private void addComponentsToPane(Container pane, String firstName, String lastName) {
+        pane.setLayout(new BorderLayout());
+        pane.setBackground(new Color(173, 216, 230)); // Set blue background color
 
-    // Add the header
-    JPanel headerPanel = createHeaderPanel(firstName, lastName);
-    pane.add(headerPanel, BorderLayout.NORTH);
+        // Add the header
+        JPanel headerPanel = createHeaderPanel(firstName, lastName);
+        pane.add(headerPanel, BorderLayout.NORTH);
 
-    // Content specific to Cart page
-    JPanel contentPanel = createContentPanel();
-    JScrollPane scrollPane = new JScrollPane(contentPanel);
-    scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-    pane.add(scrollPane, BorderLayout.CENTER);
+        // Content specific to Cart page
+        JPanel contentPanel = createContentPanel();
+        JScrollPane scrollPane = new JScrollPane(contentPanel);
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        pane.add(scrollPane, BorderLayout.CENTER);
 
-    // Add the footer
-    JPanel footerPanel = createFooterPanel();
-    pane.add(footerPanel, BorderLayout.SOUTH);
-}
-
-public JPanel createCartPanel() {
-    JPanel cartPanel = new JPanel();
-    cartPanel.setLayout(new BoxLayout(cartPanel, BoxLayout.Y_AXIS));
-    cartPanel.setBackground(new Color(173, 216, 230)); // Set blue background color
-
-    // Iterate over cart items and add them to the cart panel
-    for (Item cartItem : cartItems) {
-        JPanel itemPanel = createCartItemPanel(cartItems);
-        cartPanel.add(itemPanel);
+        // Add the footer
+        JPanel footerPanel = createFooterPanel();
+        pane.add(footerPanel, BorderLayout.SOUTH);
     }
 
-    // Add subtotal, tax, and order total
-    JPanel totalsPanel = createTotalsPanel();
-    cartPanel.add(totalsPanel);
+    public JPanel createCartPanel() {
+        JPanel cartPanel = new JPanel();
+        cartPanel.setLayout(new BoxLayout(cartPanel, BoxLayout.Y_AXIS));
+        cartPanel.setBackground(new Color(173, 216, 230)); // Set blue background color
 
-    return cartPanel;
-}
+        // Iterate over cart items and add them to the cart panel
+        for (Item cartItem : cartItems) {
+            JPanel itemPanel = createCartItemPanel(cartItem); // Pass 'cartItem' here
+            cartPanel.add(itemPanel);
+        }
+
+        // Add subtotal, tax, and order total
+        JPanel totalsPanel = createTotalsPanel();
+        cartPanel.add(totalsPanel);
+
+        return cartPanel;
+    }
     private JPanel createTotalsPanel() {
         JPanel totalsPanel = new JPanel(new GridLayout(3, 1));
         totalsPanel.setBackground(new Color(173, 216, 230)); // Set blue background color
@@ -153,7 +152,7 @@ public JPanel createCartPanel() {
         return subtotal;
     }
 
- private JPanel createContentPanel() {
+    private JPanel createContentPanel() {
         JPanel contentPanel = new JPanel(new BorderLayout());
 
         // Title
@@ -179,7 +178,7 @@ public JPanel createCartPanel() {
 
         return contentPanel;
     }
-    private JPanel createCartItemPanel(List<Item> item) {
+    private JPanel createCartItemPanel(Item item) {
         JPanel cartItemPanel = new JPanel();
         cartItemPanel.setLayout(new BorderLayout());
         cartItemPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -213,24 +212,34 @@ public JPanel createCartPanel() {
 
         // Remove button on the right
         JButton removeButton = new JButton("Remove");
-        removeButton.addActionListener(e -> handleRemoveButtonClick(removeditem));
+        removeButton.addActionListener(e -> handleRemoveButtonClick((Item) item)); // Pass 'item' here
         cartItemPanel.add(removeButton, BorderLayout.EAST);
 
         return cartItemPanel;
     }
 
-    private void handleRemoveButtonClick(Item removeditem) {
-        cartItems.remove(removeditem);
+    private void handleRemoveButtonClick(Item removedItem) {
+        cartItems.remove(removedItem);
         refreshCartPanel();
-        JOptionPane.showMessageDialog(this, "Item removed: " + Item.getName());
+        JOptionPane.showMessageDialog(this, "Item removed: " + removedItem.getName());
     }
 
     private void refreshCartPanel() {
         // Refresh the cart panel after removing an item
         JPanel cartPanel = createCartPanel();
         JScrollPane scrollPane = new JScrollPane(cartPanel);
-        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        // Remove the existing cart panel before adding the updated one
+        Component[] components = getContentPane().getComponents();
+        for (Component component : components) {
+            if (component instanceof JScrollPane) {
+                getContentPane().remove(component);
+                break; // Assuming there's only one JScrollPane, exit the loop after removal
+            }
+        }
+
         getContentPane().add(scrollPane, BorderLayout.CENTER);
+
         revalidate();
         repaint();
     }
