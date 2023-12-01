@@ -1,5 +1,7 @@
 package user.order;
 
+import java.util.List;
+
 public class Pizza extends Item {
     private String size;
     private int toppingCount;
@@ -12,6 +14,11 @@ public class Pizza extends Item {
         toppingList = new Topping[4];
     }
 
+    public Pizza(String customPizza, List<Item> selectedToppings) {
+        name = "Custom Pizza";
+        cost = 20.99f;
+
+    }
     public void setSize(String s) {
         this.size = s;
     }

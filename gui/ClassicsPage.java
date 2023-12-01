@@ -17,6 +17,7 @@ public class ClassicsPage extends JFrame {
 
     float xlprice = 21.99f;
     float price;
+    String selectedSize;
 
 
     public ClassicsPage(String firstName, String lastName) {
@@ -53,169 +54,157 @@ public class ClassicsPage extends JFrame {
         pane.add(footerPanel, BorderLayout.SOUTH);
     }
 
-private JPanel createPizzaButtonsPanel(String firstName, String lastName) {
-    JPanel pizzaButtonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-    pizzaButtonsPanel.setBackground(new Color(173, 216, 230));
+    private JPanel createPizzaButtonsPanel(String firstName, String lastName) {
+        JPanel pizzaButtonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        pizzaButtonsPanel.setBackground(new Color(173, 216, 230));
 
-    String[] pizzaTypes = {"Pepperoni", "Cheese", "Meat Lovers", "Veggie Lovers", "Supreme"};
-    String[] pizzaImages = {"C:\\Users\\ebend\\OneDrive\\Desktop\\VsCode Projects\\TheUrbanSlice\\gui\\images\\pepperoni.png",
-            "C:\\Users\\ebend\\OneDrive\\Desktop\\VsCode Projects\\TheUrbanSlice\\gui\\images\\cheese.png",
-            "C:\\Users\\ebend\\OneDrive\\Desktop\\VsCode Projects\\TheUrbanSlice\\gui\\images\\images.jpg",
-            "C:\\Users\\ebend\\OneDrive\\Desktop\\VsCode Projects\\TheUrbanSlice\\gui\\images\\5ff33d7df72e71d8755784135a6e6edd.jpg",
-            "C:\\Users\\ebend\\OneDrive\\Desktop\\VsCode Projects\\TheUrbanSlice\\gui\\images\\DSC_0905-min.png"};
+        String[] pizzaTypes = {"Pepperoni", "Cheese", "Meat Lovers", "Veggie Lovers", "Supreme"};
+        String[] pizzaImages = {"C:\\Users\\ebend\\OneDrive\\Desktop\\VsCode Projects\\TheUrbanSlice\\gui\\images\\pepperoni.png",
+                "C:\\Users\\ebend\\OneDrive\\Desktop\\VsCode Projects\\TheUrbanSlice\\gui\\images\\cheese.png",
+                "C:\\Users\\ebend\\OneDrive\\Desktop\\VsCode Projects\\TheUrbanSlice\\gui\\images\\images.jpg",
+                "C:\\Users\\ebend\\OneDrive\\Desktop\\VsCode Projects\\TheUrbanSlice\\gui\\images\\5ff33d7df72e71d8755784135a6e6edd.jpg",
+                "C:\\Users\\ebend\\OneDrive\\Desktop\\VsCode Projects\\TheUrbanSlice\\gui\\images\\DSC_0905-min.png"};
 
 
-    for (int i = 0; i < pizzaTypes.length; i++) {
-        JPanel pizzaPanel = new JPanel();
-        pizzaPanel.setLayout(new BoxLayout(pizzaPanel, BoxLayout.Y_AXIS));
-        pizzaPanel.setBackground(new Color(173, 216, 230));
+        for (int i = 0; i < pizzaTypes.length; i++) {
+            JPanel pizzaPanel = new JPanel();
+            pizzaPanel.setLayout(new BoxLayout(pizzaPanel, BoxLayout.Y_AXIS));
+            pizzaPanel.setBackground(new Color(173, 216, 230));
 
-        JButton pizzaButton = createPizzaButton(firstName, lastName, pizzaTypes[i], pizzaImages[i],
-                smallprice, mediumprice, largeprice, xlprice);
-        pizzaPanel.add(pizzaButton);
+            JButton pizzaButton = createPizzaButton(firstName, lastName, pizzaTypes[i], pizzaImages[i],
+                    smallprice, mediumprice, largeprice, xlprice);
+            pizzaPanel.add(pizzaButton);
 
-        JPanel sizeAndOrderPanel = createSizeAndOrderPanel(pizzaTypes[i], smallprice, mediumprice, largeprice, xlprice);
-        pizzaPanel.add(sizeAndOrderPanel);
+            JPanel sizeAndOrderPanel = createSizeAndOrderPanel(pizzaTypes[i], smallprice, mediumprice, largeprice, xlprice);
+            pizzaPanel.add(sizeAndOrderPanel);
 
-        pizzaButtonsPanel.add(pizzaPanel);
+            pizzaButtonsPanel.add(pizzaPanel);
+        }
+
+        return pizzaButtonsPanel;
     }
 
-    return pizzaButtonsPanel;
-}
+    private JButton createPizzaButton(String firstName, String lastName, String pizzaType, String imagePath,
+                                      double smallPrice, double mediumPrice, double largePrice, double xlPrice) {
+        JButton pizzaButton = new JButton("<html><center>" + pizzaType + "</center></html>");
 
-private JButton createPizzaButton(String firstName, String lastName, String pizzaType, String imagePath,
-                                  double smallPrice, double mediumPrice, double largePrice, double xlPrice) {
-    JButton pizzaButton = new JButton("<html><center>" + pizzaType + "</center></html>");
+        pizzaButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+        pizzaButton.setHorizontalTextPosition(SwingConstants.CENTER);
 
-    pizzaButton.setVerticalTextPosition(SwingConstants.BOTTOM);
-    pizzaButton.setHorizontalTextPosition(SwingConstants.CENTER);
+        ImageIcon icon = new ImageIcon(imagePath);
+        Image img = icon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+        pizzaButton.setIcon(new ImageIcon(img));
 
-    ImageIcon icon = new ImageIcon(imagePath);
-    Image img = icon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
-    pizzaButton.setIcon(new ImageIcon(img));
+        pizzaButton.setPreferredSize(new Dimension(160, 160));
+        pizzaButton.setBorder(BorderFactory.createEmptyBorder());
 
-    pizzaButton.setPreferredSize(new Dimension(160, 160));
-    pizzaButton.setBorder(BorderFactory.createEmptyBorder());
+        pizzaButton.addActionListener(e -> {
+            handlePizzaButtonClick(firstName, lastName, pizzaType, smallPrice, mediumPrice, largePrice,xlPrice );
+        });
 
-    pizzaButton.addActionListener(e -> {
-        handlePizzaButtonClick(firstName, lastName, pizzaType, smallPrice, mediumPrice, largePrice,xlPrice );
-    });
-
-    return pizzaButton;
-}
-
-private void handlePizzaButtonClick(String firstName, String lastName, String pizzaType, double smallPrice, double mediumPrice, double largePrice, double xlPrice) {
-    String message = "Pizza: " + pizzaType + "\n"
-            + "Prices:\n"
-            + "Small: $" + smallPrice + "\n"
-            + "Medium: $" + mediumPrice + "\n"
-            + "Large: $" + largePrice + "\n"
-            +"XLarge : $" +xlPrice;
-    JOptionPane.showMessageDialog(this, message);
-}
-
-
-
-private JPanel createSizeAndOrderPanel(String pizzaType, double smallPrice, double mediumPrice, double largePrice, double xlPrice) {
-    JPanel sizeAndOrderPanel = new JPanel(new GridLayout(2, 1, 5, 5)); // 2 rows, 1 column
-    sizeAndOrderPanel.setBackground(new Color(173, 216, 230)); // Set blue background color
-
-    String[] sizes = {"Small", "Medium", "Large", "Extra Large"}; // Added "Extra Large"
-
-    JButton sizeButton = new JButton("Select Size");
-    sizeButton.addActionListener(e -> handleSizeButtonClick(pizzaType, sizes, smallPrice, mediumPrice, largePrice, xlPrice));
-    sizeButton.setBackground(new Color(173, 216, 230)); // Set blue background color
-    sizeAndOrderPanel.add(sizeButton);
-
-    JButton orderButton = new JButton("Add to Order");
-    orderButton.addActionListener(e -> handleOrderButtonClick(pizzaType));
-    orderButton.setBackground(new Color(173, 216, 230)); // Set blue background color
-    sizeAndOrderPanel.add(orderButton);
-
-    return sizeAndOrderPanel;
-}
-
-
-private void handleSizeButtonClick(String pizzaType, String[] sizes, double smallPrice, double mediumPrice, double largePrice, double xlPrice) {
-    String selectedSize = (String) JOptionPane.showInputDialog(
-            this,
-            "Select Size for " + pizzaType,
-            "Size Selection",
-            JOptionPane.QUESTION_MESSAGE,
-            null,
-            sizes,
-            sizes[0]
-    );
-
-    if (selectedSize != null) {
-        switch (selectedSize) {
-            case "Small":
-                price = smallprice;
-                break;
-            case "Medium":
-                price = mediumprice;
-                break;
-            case "Large":
-                price = largeprice;
-                break;
-            case "Extra Large":  // Change the case to match "Extra Large"
-                price = xlprice;
-                break;
-            default:
-                price = 0.0f;
-                break;
-        }
-
-        String sizeLabel;
-        switch (selectedSize) {
-            case "Extra Large":
-                sizeLabel = "XL";
-                break;
-            default:
-                sizeLabel = selectedSize.substring(0, 1); // Use the first letter for normal sizes
-                break;
-        }
-
+        return pizzaButton;
     }
-}
+
+    private void handlePizzaButtonClick(String firstName, String lastName, String pizzaType, double smallPrice, double mediumPrice, double largePrice, double xlPrice) {
+        String message = "Pizza: " + pizzaType + "\n"
+                + "Prices:\n"
+                + "Small: $" + smallPrice + "\n"
+                + "Medium: $" + mediumPrice + "\n"
+                + "Large: $" + largePrice + "\n"
+                +"XLarge : $" +xlPrice;
+        JOptionPane.showMessageDialog(this, message);
+    }
+
+
+
+    private JPanel createSizeAndOrderPanel(String pizzaType, double smallPrice, double mediumPrice, double largePrice, double xlPrice) {
+        JPanel sizeAndOrderPanel = new JPanel(new GridLayout(2, 1, 5, 5)); // 2 rows, 1 column
+        sizeAndOrderPanel.setBackground(new Color(173, 216, 230)); // Set blue background color
+
+        String[] sizes = {"Small", "Medium", "Large", "Extra Large"}; // Added "Extra Large"
+
+        JButton sizeButton = new JButton("Select Size");
+        sizeButton.addActionListener(e -> handleSizeButtonClick(pizzaType, sizes, smallPrice, mediumPrice, largePrice, xlPrice));
+        sizeButton.setBackground(new Color(173, 216, 230)); // Set blue background color
+        sizeAndOrderPanel.add(sizeButton);
+
+        JButton orderButton = new JButton("Add to Order");
+        orderButton.addActionListener(e -> handleOrderButtonClick(pizzaType));
+        orderButton.setBackground(new Color(173, 216, 230)); // Set blue background color
+        sizeAndOrderPanel.add(orderButton);
+
+        return sizeAndOrderPanel;
+    }
+
+
+    private void handleSizeButtonClick(String pizzaType, String[] sizes, double smallPrice, double mediumPrice, double largePrice, double xlPrice) {
+        String selectedSize = (String) JOptionPane.showInputDialog(
+                this,
+                "Select Size for " + pizzaType,
+                "Size Selection",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                sizes,
+                sizes[0]
+        );
+
+        if (selectedSize != null) {
+            switch (selectedSize) {
+                case "Small":
+                    price = smallprice;
+                    break;
+                case "Medium":
+                    price = mediumprice;
+                    break;
+                case "Large":
+                    price = largeprice;
+                    break;
+                case "Extra Large":  // Change the case to match "Extra Large"
+                    price = xlprice;
+                    break;
+                default:
+                    price = 0.0f;
+                    break;
+            }
+
+            String sizeLabel;
+            switch (selectedSize) {
+                case "Extra Large":
+                    sizeLabel = "XL";
+                    break;
+                default:
+                    sizeLabel = selectedSize.substring(0, 1); // Use the first letter for normal sizes
+                    break;
+            }
+
+        }
+    }
 
 
 
 
 
-     private void handleOrderButtonClick(String pizzaType) {
-        // Check if a size has been selected
-        if (!isSizeSelected(pizzaType)) {
-            JOptionPane.showMessageDialog(this, "Please select a size before adding to the order.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+    private void handleOrderButtonClick(String pizzaType) {
+
+        if(price <= 0){
+            String message = "Please select a size";
+            JOptionPane.showMessageDialog(this, message);
+        }
+        else{
+            newpizza = new Pizza(selectedSize,price,pizzaType);
+            newpizza.setName(pizzaType);
+            newpizza.setCost(price);
+            cartItems.add(newpizza);
         }
 
-       // newpizza = new Pizza();
-        // Continue with the order process
         String message = "Item successfully added to cart: " + pizzaType;
         JOptionPane.showMessageDialog(this, message);
     }
 
-    private boolean isSizeSelected(String pizzaType) {
-        // Check if a size has been selected for the specified pizza type
-        // You may need to modify this based on how you store the selected sizes in your application
-        // For now, assuming that a size is selected if it is not null or an empty string
-        return !getSizeSelection(pizzaType).isEmpty();
-    }
-
-    private String getSizeSelection(String pizzaType) {
-        // Retrieve and return the selected size for the specified pizza type
-        // You may need to modify this based on how you store the selected sizes in your application
-        // For now, using a simple placeholder, you may need to replace it with your actual implementation
-        // Example: return selectedSizes.get(pizzaType);
-        return "";
-    }
-
-
     private void handlePizzaButtonClick(String firstName, String lastName, String pizzaType) {
         // You can customize the behavior when a pizza button is clicked
 
-       // JOptionPane.showMessageDialog(this, message);
+        // JOptionPane.showMessageDialog(this, message);
     }
 
 

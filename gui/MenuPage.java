@@ -88,11 +88,7 @@ private void addComponentsToPane(Container pane, String firstName, String lastNa
                 classicsPage.setVisible(true);
                 this.dispose();
                 break;
-            case "Specialties":
-                SpecialtiesPage specialtiesPage = new SpecialtiesPage("John", "Doe");
-                specialtiesPage.setVisible(true);
-                this.dispose();
-                break;
+
 
             default:
                 JOptionPane.showMessageDialog(this, "Unknown category: " + categoryName);

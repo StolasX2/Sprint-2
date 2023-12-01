@@ -110,7 +110,7 @@ public class PaymentPage extends JFrame {
         JPanel footerPanel = createFooterPanel();
         pane.add(footerPanel, BorderLayout.SOUTH);
     }
-private JPanel createContentPanel() {
+    private JPanel createContentPanel() {
     JPanel contentPanel = new JPanel(new BorderLayout());
 
     // Checkout panel
@@ -191,7 +191,7 @@ private JPanel createContentPanel() {
         JPanel orderDetailsPanel = new JPanel();
         //orderDetailsPanel.setLayout(new GridLayout(Order.getItemList().size(), 1));
 
-        for (Item item : Order.getItemList()) {
+        for (Item item : cartItems) {
             JLabel itemLabel = new JLabel(item.toString());
             orderDetailsPanel.add(itemLabel);
         }
@@ -340,7 +340,6 @@ private JPanel createContentPanel() {
         // Sample cart items
 
         cartItems.add(new Pizza("Large", 12.99f,"Pizza"));
-        cartItems.add(new Dessert(5.99f, "Brownie" ));
 
         SwingUtilities.invokeLater(() -> {
             CartPage cartPage = new CartPage("John", "doe",  cartItems);

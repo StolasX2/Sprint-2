@@ -1,12 +1,15 @@
 package user.gui;
 
+import user.order.Item;
+import user.order.Pizza;
+import user.order.Topping;
+
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 import static user.gui.CartPage.cartItems;
 
@@ -14,7 +17,8 @@ public class CreateYourOwnPizzaPage extends JFrame {
     private Map<String, Map<String, List<String>>> pizzaOptions;
     private Iterator<Map.Entry<String, Map<String, List<String>>>> sectionIterator;
     private String currentSection;
-private int currentSectionIndex;
+    private int currentSectionIndex;
+
     public CreateYourOwnPizzaPage(String firstName, String lastName) {
         super("Create Your Own Pizza");
         setSize(800, 600);
@@ -24,30 +28,20 @@ private int currentSectionIndex;
         pizzaOptions = new LinkedHashMap<>();
         initializePizzaOptions();
 
-        sectionIterator = pizzaOptions.entrySet().iterator();  // Initialize only once in the constructor
-        currentSection = sectionIterator.next().getKey(); // Start with the first section
+        sectionIterator = pizzaOptions.entrySet().iterator();
+        currentSection = sectionIterator.next().getKey();
 
         addComponentsToPane(getContentPane(), firstName, lastName);
     }
 
     private void initializePizzaOptions() {
         pizzaOptions = new LinkedHashMap<>();
-
-        // Base section
         pizzaOptions.put("Base", createBaseOptions());
-
-        // Cheese section
         pizzaOptions.put("Cheese", createCheeseOptions());
-
-        // Meat section
         pizzaOptions.put("Meat", createMeatOptions());
-
-        // Veggies section
         pizzaOptions.put("Veggies", createVeggiesOptions());
-         currentSectionIndex = 0;
+        currentSectionIndex = 0;
     }
-  
-
 
     private Map<String, List<String>> createBaseOptions() {
         Map<String, List<String>> baseOptions = new LinkedHashMap<>();
@@ -58,9 +52,7 @@ private int currentSectionIndex;
         baseOptions.put("Bake", List.of("Normal Bake", "Well Done"));
         return baseOptions;
     }
-private String getPizzaOptionKey(int index) {
-    return pizzaOptions.keySet().toArray(new String[0])[index];
-}
+
     private Map<String, List<String>> createCheeseOptions() {
         Map<String, List<String>> cheeseOptions = new LinkedHashMap<>();
         cheeseOptions.put("How much?", List.of("Light Cheese", "Normal Cheese", "Extra Cheese", "No Cheese"));
@@ -82,37 +74,30 @@ private String getPizzaOptionKey(int index) {
     private void addComponentsToPane(Container pane, String firstName, String lastName) {
         pane.setLayout(new BorderLayout());
 
-        // Add the header
         JPanel headerPanel = createHeaderPanel(firstName, lastName);
         pane.add(headerPanel, BorderLayout.NORTH);
 
-        // Add the body
         JPanel bodyPanel = createBodyPanel();
         pane.add(bodyPanel, BorderLayout.CENTER);
 
-        // Add the footer
         JPanel footerPanel = createFooterPanel();
         pane.add(footerPanel, BorderLayout.SOUTH);
     }
-    
 
     private JPanel createBodyPanel() {
         JPanel bodyPanel = new JPanel(new BorderLayout());
         bodyPanel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEmptyBorder(20, 20, 20, 20), // Empty border within the TitledBorder
+                BorderFactory.createEmptyBorder(20, 20, 20, 20),
                 "Create your Own!",
-                TitledBorder.CENTER, // Title position (you can use TitledBorder.LEFT, TitledBorder.RIGHT, etc.)
-                TitledBorder.TOP, // Title justification (you can use TitledBorder.CENTER, TitledBorder.LEFT, TitledBorder.RIGHT, etc.)
-                new Font("Arial", Font.BOLD, 14), // Title font
-                Color.RED // Title color
+                TitledBorder.CENTER,
+                TitledBorder.TOP,
+                new Font("Arial", Font.BOLD, 14),
+                Color.RED
         ));
 
-
-        // Display the current section options
         JPanel sectionPanel = createSectionPanel(currentSection, pizzaOptions.get(currentSection));
         bodyPanel.add(sectionPanel, BorderLayout.CENTER);
 
-        // Add the "Next" button
         JButton nextButton = new JButton("Next");
         nextButton.addActionListener(e -> handleNextButton());
         bodyPanel.add(nextButton, BorderLayout.SOUTH);
@@ -122,6 +107,8 @@ private String getPizzaOptionKey(int index) {
 
     private JPanel createSectionPanel(String sectionName, Map<String, List<String>> options) {
         JPanel sectionPanel = new JPanel(new GridLayout(options.size(), 1));
+
+        // Always set a titled border
         sectionPanel.setBorder(BorderFactory.createTitledBorder(sectionName));
 
         for (Map.Entry<String, List<String>> entry : options.entrySet()) {
@@ -135,11 +122,11 @@ private String getPizzaOptionKey(int index) {
         return sectionPanel;
     }
 
+
     private JPanel createSubSectionPanel(String subSectionName, List<String> options) {
         JPanel subSectionPanel = new JPanel(new GridLayout(options.size(), 1));
         subSectionPanel.setBorder(BorderFactory.createTitledBorder(subSectionName));
 
-        // Create a list of radio buttons for options
         ButtonGroup buttonGroup = new ButtonGroup();
         for (String option : options) {
             JRadioButton radioButton = new JRadioButton(option);
@@ -150,23 +137,41 @@ private String getPizzaOptionKey(int index) {
         return subSectionPanel;
     }
 
-private void handleNextButton() {
-    // Save the user's selection for the current section
-    saveUserSelection();
+    private void handleNextButton() {
+        // Save the user's selection for the current section
+        saveUserSelection(currentSection, pizzaOptions.get(currentSection));
 
-    // Move to the next section
-    currentSectionIndex++;
+        // Move to the next section
+        currentSectionIndex++;
 
-    if (currentSectionIndex < pizzaOptions.size()) {
-        String currentSection = getPizzaOptionKey(currentSectionIndex);
-        System.out.println("Next Section: " + currentSection);
-        refreshBodyPanel();
-    } else {
-        // No more sections, finish the pizza creation (you can add your logic here)
-        JOptionPane.showMessageDialog(this, "Pizza creation complete!");
-        this.dispose(); // Close the current CreateYourOwnPizzaPage
+        if (currentSectionIndex < pizzaOptions.size()) {
+            currentSection = getPizzaOptionKey(currentSectionIndex);
+            System.out.println("Next Section: " + currentSection);
+            refreshBodyPanel();
+        } else {
+            // All sections completed, finish the pizza creation
+            createPizzaAndAddToCart();
+            JOptionPane.showMessageDialog(this, "Pizza creation complete!");
+            // Optionally close the window
+            // this.dispose();
+        }
     }
-}
+
+    private void createPizzaAndAddToCart() {
+        // Create a Pizza object with selected toppings
+        List<Item> selectedToppings = new ArrayList<>();
+        for (Item topping : cartItems) {
+            if (topping.getName().equals("topping")) {
+                selectedToppings.add(topping);
+            }
+        }
+
+        // Create a Pizza object with the selected toppings
+        Pizza pizza = new Pizza("Custom Pizza", selectedToppings);
+
+        // Add the Pizza to the cart
+        cartItems.add(pizza);
+    }
 
 
 
@@ -174,41 +179,48 @@ private void handleNextButton() {
         Container contentPane = getContentPane();
         Component[] components = contentPane.getComponents();
         if (components.length > 1) {
-            contentPane.remove(1); // Remove the current body panel
+            contentPane.remove(1);
         }
-        JPanel bodyPanel = createBodyPanel(); // Create a new body panel
-        contentPane.add(bodyPanel, BorderLayout.CENTER); // Add the new body panel
-        validate(); // Refresh the frame
-        repaint(); // Repaint the frame
+        JPanel bodyPanel = createBodyPanel();
+        contentPane.add(bodyPanel, BorderLayout.CENTER);
+        validate();
+        repaint();
     }
-
-    private void saveUserSelection() {
-        // Implement the logic to save user selections for each section
-        // For now, let's just show a message with the selected options
+    private String getPizzaOptionKey(int index) {
+        return pizzaOptions.keySet().toArray(new String[0])[index];
+    }
+    private void saveUserSelection(String sectionName, Map<String, List<String>> options) {
         Container contentPane = getContentPane();
         Component[] components = contentPane.getComponents();
 
         for (Component component : components) {
             if (component instanceof JPanel) {
-                TitledBorder titledBorder = (TitledBorder) ((JPanel) component).getBorder();
-                if (titledBorder != null) {
-                    String sectionName = titledBorder.getTitle();
-                    Map<String, List<String>> options = pizzaOptions.get(sectionName);
+                Border border = ((JPanel) component).getBorder();
 
-                    for (Component innerComponent : ((JPanel) component).getComponents()) {
-                        if (innerComponent instanceof JPanel) {
-                            TitledBorder subTitledBorder = (TitledBorder) ((JPanel) innerComponent).getBorder();
-                            if (subTitledBorder != null) {
-                                String subSectionName = subTitledBorder.getTitle();
-                                List<String> subOptions = options.get(subSectionName);
+                if (border instanceof TitledBorder) {
+                    TitledBorder titledBorder = (TitledBorder) border;
+                    String currentSectionName = titledBorder.getTitle();
+                    if (currentSectionName.equals(sectionName)) {
+                        Map<String, List<String>> currentOptions = options;
 
-                                for (Component subInnerComponent : ((JPanel) innerComponent).getComponents()) {
-                                    if (subInnerComponent instanceof JRadioButton) {
-                                        JRadioButton radioButton = (JRadioButton) subInnerComponent;
-                                        if (radioButton.isSelected()) {
-                                            // Save the user's selection (you can add your logic here)
-                                            JOptionPane.showMessageDialog(this, "Selected " + sectionName + " - " + subSectionName + ": " + radioButton.getText());
-                                            return;
+                        for (Component innerComponent : ((JPanel) component).getComponents()) {
+                            if (innerComponent instanceof JPanel) {
+                                Border subBorder = ((JPanel) innerComponent).getBorder();
+
+                                if (subBorder instanceof TitledBorder) {
+                                    TitledBorder subTitledBorder = (TitledBorder) subBorder;
+                                    String subSectionName = subTitledBorder.getTitle();
+                                    List<String> subOptions = currentOptions.get(subSectionName);
+
+                                    for (Component subInnerComponent : ((JPanel) innerComponent).getComponents()) {
+                                        if (subInnerComponent instanceof JRadioButton) {
+                                            JRadioButton radioButton = (JRadioButton) subInnerComponent;
+                                            if (radioButton.isSelected()) {
+                                                Topping newtop = new Topping(1.99f, "topping");
+
+                                                JOptionPane.showMessageDialog(this, "Selected " + sectionName + " - " + subSectionName + ": " + radioButton.getText());
+                                                return;
+                                            }
                                         }
                                     }
                                 }
@@ -220,60 +232,54 @@ private void handleNextButton() {
         }
     }
 
- private JPanel createHeaderPanel(String firstName, String lastName) {
-    JPanel headerPanel = new JPanel();
-    headerPanel.setLayout(new BorderLayout());
-    headerPanel.setBackground(new Color(255, 204, 102)); // Light orange background color
-
-    // Logo on the left
-    ImageIcon logoIcon = new ImageIcon("C:\\Users\\ebend\\OneDrive\\Desktop\\VsCode Projects\\TheUrbanSlice\\gui\\images\\MicrosoftTeams-image.png");
-    Image logoImage = logoIcon.getImage();
-    int logoSize = 80;
-    Image resizedLogo = logoImage.getScaledInstance(logoSize, logoSize, Image.SCALE_SMOOTH);
-    ImageIcon resizedLogoIcon = new ImageIcon(resizedLogo);
-
-    JLabel logoLabel = new JLabel(resizedLogoIcon);
-    logoLabel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-    headerPanel.add(logoLabel, BorderLayout.WEST);
-
-    // Greeting label in the center
-    JLabel greetingLabel = new JLabel("Hi, " + firstName + " " + lastName + "!");
-    greetingLabel.setFont(new Font("Arial", Font.BOLD, 18));
-    greetingLabel.setHorizontalAlignment(JLabel.CENTER);
-    greetingLabel.setForeground(new Color(51, 51, 51));
-    headerPanel.add(greetingLabel, BorderLayout.CENTER);
-
-    // Navigation buttons on the right
-    JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    buttonsPanel.setOpaque(false); // Make the buttonsPanel transparent
-
-    // "Start Your Order" button
-
-    // "MENU" button
-    JButton menuButton = new JButton("MENU");
-    menuButton.setFont(new Font("Arial", Font.BOLD, 12));
-    menuButton.addActionListener(e -> {
-        MenuPage menuPage = new MenuPage(firstName, lastName);
-        menuPage.setVisible(true);
-        CreateYourOwnPizzaPage.this.dispose(); // Close the current page
-    });
-    buttonsPanel.add(menuButton);
 
 
-    // "Cart" button
-     JButton cartButton = new JButton("Cart");
-     cartButton.setFont(new Font("Arial", Font.BOLD, 12));
-     cartButton.addActionListener(e -> {
-         CartPage cartpage = new CartPage("Jon", "Doe", cartItems);
-         cartpage.setVisible(true);
-         this.dispose();
-     });
-     buttonsPanel.add(cartButton);
+    private JPanel createHeaderPanel(String firstName, String lastName) {
+        JPanel headerPanel = new JPanel();
+        headerPanel.setLayout(new BorderLayout());
+        headerPanel.setBackground(new Color(255, 204, 102));
 
-    headerPanel.add(buttonsPanel, BorderLayout.EAST);
+        ImageIcon logoIcon = new ImageIcon("C:\\Users\\ebend\\OneDrive\\Desktop\\VsCode Projects\\TheUrbanSlice\\gui\\images\\MicrosoftTeams-image.png");
+        Image logoImage = logoIcon.getImage();
+        int logoSize = 80;
+        Image resizedLogo = logoImage.getScaledInstance(logoSize, logoSize, Image.SCALE_SMOOTH);
+        ImageIcon resizedLogoIcon = new ImageIcon(resizedLogo);
 
-    return headerPanel;
-}
+        JLabel logoLabel = new JLabel(resizedLogoIcon);
+        logoLabel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        headerPanel.add(logoLabel, BorderLayout.WEST);
+
+        JLabel greetingLabel = new JLabel("Hi, " + firstName + " " + lastName + "!");
+        greetingLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        greetingLabel.setHorizontalAlignment(JLabel.CENTER);
+        greetingLabel.setForeground(new Color(51, 51, 51));
+        headerPanel.add(greetingLabel, BorderLayout.CENTER);
+
+        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonsPanel.setOpaque(false);
+
+        JButton menuButton = new JButton("MENU");
+        menuButton.setFont(new Font("Arial", Font.BOLD, 12));
+        menuButton.addActionListener(e -> {
+            MenuPage menuPage = new MenuPage(firstName, lastName);
+            menuPage.setVisible(true);
+            CreateYourOwnPizzaPage.this.dispose();
+        });
+        buttonsPanel.add(menuButton);
+
+        JButton cartButton = new JButton("Cart");
+        cartButton.setFont(new Font("Arial", Font.BOLD, 12));
+        cartButton.addActionListener(e -> {
+            CartPage cartpage = new CartPage("Jon", "Doe", cartItems);
+            cartpage.setVisible(true);
+            this.dispose();
+        });
+        buttonsPanel.add(cartButton);
+
+        headerPanel.add(buttonsPanel, BorderLayout.EAST);
+
+        return headerPanel;
+    }
 
     private JPanel createFooterPanel() {
         JPanel footerPanel = new JPanel();

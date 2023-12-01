@@ -1,5 +1,7 @@
 package user.order;
 
+import java.util.List;
+
 public class Item {
     protected static float cost;
     public static String name;
@@ -12,6 +14,8 @@ public class Item {
         cost = 0;
         name = "null";
     }
+
+
 
     public static float getCost() {
         return cost;
@@ -29,12 +33,6 @@ public class Item {
     public float setCost(float c) {
         cost = c;
         return cost;
-    }
-}
-
-class Topping extends Item {
-    public Topping(float c, String n) {
-        super(c, n);
     }
 }
 
