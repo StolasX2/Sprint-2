@@ -10,8 +10,6 @@ import java.util.List;
 import static user.gui.CartPage.cartItems;
 
 public class PaymentPage extends JFrame {
-    Payment pay;
-
     private final CartPage cartPage;
 
        public PaymentPage(String firstName, String lastName, CartPage cartPage) {
@@ -151,21 +149,6 @@ public class PaymentPage extends JFrame {
 
         return paymentPanel;
     }
-
-    private JPanel createBalanceAndOptionsPanel() {
-        JPanel balanceAndOptionsPanel = new JPanel();
-        balanceAndOptionsPanel.setLayout(new BorderLayout());
-
-        double balanceDue = calculateBalanceDue();
-        JLabel balanceLabel = new JLabel("Balance Due: $" + balanceDue);
-        balanceLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        balanceAndOptionsPanel.add(balanceLabel, BorderLayout.NORTH);
-
-        JPanel paymentOptionsPanel = createPaymentOptionsPanel();
-        balanceAndOptionsPanel.add(paymentOptionsPanel, BorderLayout.CENTER);
-
-        return balanceAndOptionsPanel;
-    }
         private JPanel createOrderDetailsPanel() {
         JPanel orderDetailsPanel = new JPanel();
 
@@ -289,9 +272,6 @@ public class PaymentPage extends JFrame {
         return paymentOptionsPanel;
     }
 
-   private double calculateBalanceDue() {
-    return cartPage.calculateSubtotal();
-}
     private void handlePaymentButtonClick(double orderTotal, boolean creditCard, boolean payPal, boolean cashOnDelivery) {
 
         JOptionPane.showMessageDialog(this, "Payment Successful!\nTotal Amount: $" + orderTotal);

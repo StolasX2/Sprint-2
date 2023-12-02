@@ -33,23 +33,19 @@ public class ClassicsPage extends JFrame {
         pane.setLayout(new BorderLayout());
         pane.setBackground(new Color(173, 216, 230));
 
-        // Add the header
         JPanel headerPanel = createHeaderPanel(firstName, lastName);
         pane.add(headerPanel, BorderLayout.NORTH);
 
-        // Content specific to Classics page
         JLabel categoryLabel = new JLabel(category);
         categoryLabel.setFont(new Font("Arial", Font.BOLD, 18));
         categoryLabel.setHorizontalAlignment(JLabel.CENTER);
         pane.add(categoryLabel, BorderLayout.CENTER);
 
-        // Add the pizza buttons
         JPanel pizzaButtonsPanel = createPizzaButtonsPanel(firstName, lastName);
         JScrollPane scrollPane = new JScrollPane(pizzaButtonsPanel);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         pane.add(scrollPane, BorderLayout.CENTER);
 
-        // Add the footer
         JPanel footerPanel = createFooterPanel();
         pane.add(footerPanel, BorderLayout.SOUTH);
     }
@@ -201,11 +197,6 @@ public class ClassicsPage extends JFrame {
         JOptionPane.showMessageDialog(this, message);
     }
 
-    private void handlePizzaButtonClick(String firstName, String lastName, String pizzaType) {
-        // You can customize the behavior when a pizza button is clicked
-
-        // JOptionPane.showMessageDialog(this, message);
-    }
 
 
     private JPanel createHeaderPanel(String firstName, String lastName) {
@@ -213,7 +204,6 @@ public class ClassicsPage extends JFrame {
         headerPanel.setLayout(new BorderLayout());
         headerPanel.setBackground(new Color(255, 204, 102));
 
-        // Logo on the left
         ImageIcon logoIcon = new ImageIcon("C:\\Users\\ebend\\OneDrive\\Desktop\\VsCode Projects\\TheUrbanSlice\\gui\\images\\MicrosoftTeams-image.png");
         Image logoImage = logoIcon.getImage();
         int logoSize = 80;
@@ -224,18 +214,15 @@ public class ClassicsPage extends JFrame {
         logoLabel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         headerPanel.add(logoLabel, BorderLayout.WEST);
 
-        // Greeting label in the center
         JLabel greetingLabel = new JLabel("Hi, " + firstName + " " + lastName + "!");
         greetingLabel.setFont(new Font("Arial", Font.BOLD, 18));
         greetingLabel.setHorizontalAlignment(JLabel.CENTER);
         greetingLabel.setForeground(new Color(51, 51, 51));
         headerPanel.add(greetingLabel, BorderLayout.CENTER);
 
-        // Navigation buttons on the right
         JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonsPanel.setOpaque(false);
 
-        // "Start Your Order" button
         JButton startOrderButton = new JButton("Start Your Order");
         startOrderButton.setFont(new Font("Arial", Font.BOLD, 14));
         startOrderButton.setForeground(Color.WHITE);
@@ -245,7 +232,6 @@ public class ClassicsPage extends JFrame {
         startOrderButton.addActionListener(e -> JOptionPane.showMessageDialog(ClassicsPage.this, "Start Your Order button clicked"));
         buttonsPanel.add(startOrderButton);
 
-        // "MENU" button
         JButton menuButton = new JButton("MENU");
         menuButton.setFont(new Font("Arial", Font.BOLD, 12));
         menuButton.addActionListener(e -> {
@@ -255,7 +241,6 @@ public class ClassicsPage extends JFrame {
         });
         buttonsPanel.add(menuButton);
 
-        // "Cart" button
         JButton cartButton = new JButton("Cart");
         cartButton.setFont(new Font("Arial", Font.BOLD, 12));
         cartButton.addActionListener(e -> {

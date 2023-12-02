@@ -108,7 +108,6 @@ public class CreateYourOwnPizzaPage extends JFrame {
     private JPanel createSectionPanel(String sectionName, Map<String, List<String>> options) {
         JPanel sectionPanel = new JPanel(new GridLayout(options.size(), 1));
 
-        // Always set a titled border
         sectionPanel.setBorder(BorderFactory.createTitledBorder(sectionName));
 
         for (Map.Entry<String, List<String>> entry : options.entrySet()) {
@@ -153,7 +152,6 @@ public class CreateYourOwnPizzaPage extends JFrame {
     }
 
     private void createPizzaAndAddToCart() {
-        // Create a Pizza object with selected toppings
         Pizza pizza = new Pizza("Custom Pizza: ");
         List<Item> selectedToppings = new ArrayList<>();
         for (Item topping : selectedToppings) {

@@ -14,7 +14,7 @@ public class SignUpDialog extends JDialog {
     private JPasswordField confirmPasswordField;
 
     public SignUpDialog(Frame owner) {
-        super(owner, "Create Your Account", true); // true makes it a modal dialog
+        super(owner, "Create Your Account", true);
         setSize(400, 300);
         setLocationRelativeTo(owner);
 
