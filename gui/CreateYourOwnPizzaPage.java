@@ -138,10 +138,8 @@ public class CreateYourOwnPizzaPage extends JFrame {
     }
 
     private void handleNextButton() {
-        // Save the user's selection for the current section
-        saveUserSelection(currentSection, pizzaOptions.get(currentSection));
 
-        // Move to the next section
+        saveUserSelection(currentSection, pizzaOptions.get(currentSection));
         currentSectionIndex++;
 
         if (currentSectionIndex < pizzaOptions.size()) {
@@ -149,11 +147,8 @@ public class CreateYourOwnPizzaPage extends JFrame {
             System.out.println("Next Section: " + currentSection);
             refreshBodyPanel();
         } else {
-            // All sections completed, finish the pizza creation
             createPizzaAndAddToCart();
             JOptionPane.showMessageDialog(this, "Pizza creation complete!");
-            // Optionally close the window
-            // this.dispose();
         }
     }
 
@@ -164,11 +159,6 @@ public class CreateYourOwnPizzaPage extends JFrame {
         for (Item topping : selectedToppings) {
            pizza.setName(pizza.name + ", "+topping);
         }
-
-        // Create a Pizza object with the selected toppings
-
-
-        // Add the Pizza to the cart
         CartPage.cartItems.add(pizza);
     }
 

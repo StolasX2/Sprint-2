@@ -1,4 +1,4 @@
-package order;
+package user.order;
 
 public class Payment {
     private long confirmationNumber;

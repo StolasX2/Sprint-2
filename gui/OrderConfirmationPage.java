@@ -27,9 +27,8 @@ public class OrderConfirmationPage extends JFrame {
     private JPanel createHeaderPanel(String firstName, String lastName) {
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BorderLayout());
-        headerPanel.setBackground(new Color(255, 204, 102)); // Light orange background color
+        headerPanel.setBackground(new Color(255, 204, 102));
 
-        // Logo on the left
         ImageIcon logoIcon = new ImageIcon("C:\\Users\\ebend\\OneDrive\\Desktop\\VsCode Projects\\TheUrbanSlice\\gui\\images\\MicrosoftTeams-image.png");
         Image logoImage = logoIcon.getImage();
         int logoSize = 80;
@@ -40,24 +39,21 @@ public class OrderConfirmationPage extends JFrame {
         logoLabel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         headerPanel.add(logoLabel, BorderLayout.WEST);
 
-        // Greeting label in the center
         JLabel greetingLabel = new JLabel("Hi, " + firstName + " " + lastName + "!");
         greetingLabel.setFont(new Font("Arial", Font.BOLD, 18));
         greetingLabel.setHorizontalAlignment(JLabel.CENTER);
         greetingLabel.setForeground(new Color(51, 51, 51));
         headerPanel.add(greetingLabel, BorderLayout.CENTER);
 
-        // Navigation buttons on the right
         JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        buttonsPanel.setOpaque(false); // Make the buttonsPanel transparent
+        buttonsPanel.setOpaque(false);
 
-        // "MENU" button
         JButton menuButton = new JButton("MENU");
         menuButton.setFont(new Font("Arial", Font.BOLD, 12));
         menuButton.addActionListener(e -> {
             MenuPage menuPage = new MenuPage(firstName, lastName);
             menuPage.setVisible(true);
-            OrderConfirmationPage.this.dispose(); // Close the current page
+            OrderConfirmationPage.this.dispose();
         });
         buttonsPanel.add(menuButton);
 
@@ -70,32 +66,26 @@ public class OrderConfirmationPage extends JFrame {
 private JPanel createContentPanel() {
     JPanel contentPanel = new JPanel(new BorderLayout());
 
-    // Thank you message
     JPanel thankYouPanel = createThankYouPanel();
     contentPanel.add(thankYouPanel, BorderLayout.NORTH);
 
-    // Order details
     JPanel orderDetailsPanel = createOrderDetailsPanel();
     contentPanel.add(orderDetailsPanel, BorderLayout.WEST);
 
-    // Pizza image
     JPanel pizzaImagePanel = createPizzaImagePanel();
     contentPanel.add(pizzaImagePanel, BorderLayout.CENTER);
 
-    // Estimated wait time
     JPanel waitTimePanel = createWaitTimePanel();
     contentPanel.add(waitTimePanel, BorderLayout.EAST);
 
-    // Back to Menu button
     JButton backToMenuButton = new JButton("Back to Menu");
     backToMenuButton.setFont(new Font("Arial", Font.BOLD, 12));
     backToMenuButton.addActionListener(e -> {
         MenuPage menuPage = new MenuPage("John", "Doe");
         menuPage.setVisible(true);
-        OrderConfirmationPage.this.dispose(); // Close the current page
+        OrderConfirmationPage.this.dispose();
     });
 
-    // Adding the Back to Menu button below the ordered items
     JPanel buttonPanel = new JPanel();
     buttonPanel.add(backToMenuButton);
     contentPanel.add(buttonPanel, BorderLayout.SOUTH);
@@ -105,7 +95,7 @@ private JPanel createContentPanel() {
 
     private JPanel createThankYouPanel() {
         JPanel thankYouPanel = new JPanel();
-        thankYouPanel.setBackground(new Color(255, 204, 102)); // Light orange background color
+        thankYouPanel.setBackground(new Color(255, 204, 102));
 
         JLabel thankYouLabel = new JLabel("Thank you for choosing The Urban Slice!");
         thankYouLabel.setFont(new Font("Arial", Font.BOLD, 24));
@@ -179,15 +169,12 @@ private JPanel createContentPanel() {
         pane.setLayout(new BorderLayout());
         pane.setBackground(new Color(173, 216, 230));
 
-        // Add the header
         JPanel headerPanel = createHeaderPanel(firstName, lastName);
         pane.add(headerPanel, BorderLayout.NORTH);
 
-        // Content specific to Order Confirmation page
         JPanel contentPanel = createContentPanel();
         pane.add(contentPanel, BorderLayout.CENTER);
 
-        // Add the footer
         JPanel footerPanel = createFooterPanel();
         pane.add(footerPanel, BorderLayout.SOUTH);
     }
@@ -195,7 +182,6 @@ private JPanel createContentPanel() {
 
     public static void main(String[] args) {
 
-        // Sample ordered items
         List<Item> orderedItems = new java.util.ArrayList<>();
         Order.getItemList().add(new Pizza("Large", 12.99f,"Pizza"));
         Order.getItemList().add(new Dessert(5.99f, "Brownie" ));

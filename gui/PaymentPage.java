@@ -1,9 +1,6 @@
 package user.gui;
 
-import user.order.Dessert;
-import user.order.Item;
-import user.order.Order;
-import user.order.Pizza;
+import user.order.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +10,7 @@ import java.util.List;
 import static user.gui.CartPage.cartItems;
 
 public class PaymentPage extends JFrame {
-    order.Payment pay;
+    Payment pay;
 
     private final CartPage cartPage;
 
@@ -32,9 +29,8 @@ public class PaymentPage extends JFrame {
     private JPanel createHeaderPanel(String firstName, String lastName) {
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BorderLayout());
-        headerPanel.setBackground(new Color(255, 204, 102)); // Light orange background color
+        headerPanel.setBackground(new Color(255, 204, 102));
 
-        // Logo on the left
         ImageIcon logoIcon = new ImageIcon("C:\\Users\\ebend\\OneDrive\\Desktop\\VsCode Projects\\TheUrbanSlice\\gui\\images\\MicrosoftTeams-image.png");
         Image logoImage = logoIcon.getImage();
         int logoSize = 80;
@@ -45,33 +41,29 @@ public class PaymentPage extends JFrame {
         logoLabel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         headerPanel.add(logoLabel, BorderLayout.WEST);
 
-        // Greeting label in the center
         JLabel greetingLabel = new JLabel("Hi, " + firstName + " " + lastName + "!");
         greetingLabel.setFont(new Font("Arial", Font.BOLD, 18));
         greetingLabel.setHorizontalAlignment(JLabel.CENTER);
         greetingLabel.setForeground(new Color(51, 51, 51));
         headerPanel.add(greetingLabel, BorderLayout.CENTER);
 
-        // Navigation buttons on the right
         JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        buttonsPanel.setOpaque(false); // Make the buttonsPanel transparent
+        buttonsPanel.setOpaque(false);
 
-        // "MENU" button
         JButton menuButton = new JButton("MENU");
         menuButton.setFont(new Font("Arial", Font.BOLD, 12));
         menuButton.addActionListener(e -> {
             MenuPage menuPage = new MenuPage(firstName, lastName);
             menuPage.setVisible(true);
-            PaymentPage.this.dispose(); // Close the current page
+            PaymentPage.this.dispose();
         });
         buttonsPanel.add(menuButton);
 
-        // "Cart" button
         JButton cartButton = new JButton("Cart");
         cartButton.setFont(new Font("Arial", Font.BOLD, 12));
         cartButton.addActionListener(e -> {
             cartPage.setVisible(true);
-            PaymentPage.this.dispose(); // Close the current page
+            PaymentPage.this.dispose();
         });
         buttonsPanel.add(cartButton);
 
@@ -98,30 +90,24 @@ public class PaymentPage extends JFrame {
         pane.setLayout(new BorderLayout());
         pane.setBackground(new Color(173, 216, 230));
 
-        // Add the header
         JPanel headerPanel = createHeaderPanel(firstName, lastName);
         pane.add(headerPanel, BorderLayout.NORTH);
 
-        // Content specific to Payment page
         JPanel contentPanel = createContentPanel();
         pane.add(contentPanel, BorderLayout.CENTER);
 
-        // Add the footer
         JPanel footerPanel = createFooterPanel();
         pane.add(footerPanel, BorderLayout.SOUTH);
     }
     private JPanel createContentPanel() {
     JPanel contentPanel = new JPanel(new BorderLayout());
 
-    // Checkout panel
     JPanel checkoutPanel = createCheckoutPanel();
     contentPanel.add(checkoutPanel, BorderLayout.WEST);
 
-    // Payment panel
     JPanel paymentPanel = createPaymentPanel();
     contentPanel.add(paymentPanel, BorderLayout.CENTER);
 
-    // Confirmation panel
     JPanel confirmationPanel = createConfirmationPanel();
     contentPanel.add(confirmationPanel, BorderLayout.EAST);
 
@@ -133,13 +119,11 @@ public class PaymentPage extends JFrame {
         JPanel checkoutPanel = new JPanel();
         checkoutPanel.setLayout(new BorderLayout());
 
-        // Title
         JLabel titleLabel = new JLabel("Your Cart");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
         checkoutPanel.add(titleLabel, BorderLayout.NORTH);
 
-        // Cart items and total
         JPanel cartPanel = cartPage.createCartPanel();
         JScrollPane cartScrollPane = new JScrollPane(cartPanel);
         checkoutPanel.add(cartScrollPane, BorderLayout.CENTER);
@@ -151,20 +135,17 @@ public class PaymentPage extends JFrame {
         JPanel paymentPanel = new JPanel();
         paymentPanel.setLayout(new BorderLayout());
 
-        // Title
         JLabel titleLabel = new JLabel("Payment");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
         paymentPanel.add(titleLabel, BorderLayout.NORTH);
 
-        // Balance Due
-        double orderTotal = cartPage.calculateSubtotal(); // Get order total from cart page
+        double orderTotal = cartPage.calculateSubtotal();
         JLabel balanceDueLabel = new JLabel("Balance Due: $" + orderTotal);
         balanceDueLabel.setFont(new Font("Arial", Font.BOLD, 16));
         balanceDueLabel.setHorizontalAlignment(JLabel.CENTER);
         paymentPanel.add(balanceDueLabel, BorderLayout.CENTER);
 
-        // Payment options
         JPanel paymentOptionsPanel = createPaymentOptionsPanel();
         paymentPanel.add(paymentOptionsPanel, BorderLayout.SOUTH);
 
@@ -175,13 +156,11 @@ public class PaymentPage extends JFrame {
         JPanel balanceAndOptionsPanel = new JPanel();
         balanceAndOptionsPanel.setLayout(new BorderLayout());
 
-        // Balance due
         double balanceDue = calculateBalanceDue();
         JLabel balanceLabel = new JLabel("Balance Due: $" + balanceDue);
         balanceLabel.setFont(new Font("Arial", Font.PLAIN, 16));
         balanceAndOptionsPanel.add(balanceLabel, BorderLayout.NORTH);
 
-        // Payment options
         JPanel paymentOptionsPanel = createPaymentOptionsPanel();
         balanceAndOptionsPanel.add(paymentOptionsPanel, BorderLayout.CENTER);
 
@@ -189,7 +168,6 @@ public class PaymentPage extends JFrame {
     }
         private JPanel createOrderDetailsPanel() {
         JPanel orderDetailsPanel = new JPanel();
-        //orderDetailsPanel.setLayout(new GridLayout(Order.getItemList().size(), 1));
 
         for (Item item : cartItems) {
             JLabel itemLabel = new JLabel(item.toString());
@@ -206,17 +184,14 @@ public class PaymentPage extends JFrame {
         JPanel confirmationPanel = new JPanel();
         confirmationPanel.setLayout(new BorderLayout());
 
-        // Title
         JLabel titleLabel = new JLabel("Order Confirmation");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
         confirmationPanel.add(titleLabel, BorderLayout.NORTH);
 
-        // Order details
         JPanel orderDetailsPanel = createOrderDetailsPanel();
         confirmationPanel.add(orderDetailsPanel, BorderLayout.CENTER);
 
-        // Place Order button
         JButton placeOrderButton = new JButton("Place Order");
         placeOrderButton.setFont(new Font("Arial", Font.BOLD, 16));
         placeOrderButton.addActionListener(e -> {
@@ -227,29 +202,24 @@ public class PaymentPage extends JFrame {
         return confirmationPanel;
     }
        private void handlePlaceOrderButtonClick() {
-    // Handle place order logic here
     JOptionPane.showMessageDialog(this, "Order Placed Successfully!");
 
-    // Get first and last names
     String firstName = cartPage.firstName;
     String lastName = cartPage.lastName;
 
-    // Create and show the OrderConfirmationPage with proper names
-    List<Item> cartItems = Order.getItemList(); // Get cart items
+    List<Item> cartItems = Order.getItemList();
     OrderConfirmationPage confirmationPage = new OrderConfirmationPage(firstName, lastName, cartItems);
     confirmationPage.setVisible(true);
 
-    this.dispose(); // Close the current PaymentPage
+    this.dispose();
 }
 
      private void showCashPopup() {
-        // Show a pop-up for cash payment instructions
         String message = "Please be sure to have cash in hand when you receive your order at the restaurant.";
         JOptionPane.showMessageDialog(this, message, "Cash Payment Instructions", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void showCardPopup() {
-        // Show a pop-up for entering card details
         JPanel panel = new JPanel(new GridLayout(5, 2));
         panel.add(new JLabel("Card Number:"));
         JTextField cardNumberField = new JTextField();
@@ -268,13 +238,11 @@ public class PaymentPage extends JFrame {
                 "Enter Card Details", JOptionPane.OK_CANCEL_OPTION);
 
         if (result == JOptionPane.OK_OPTION) {
-            // Process card details
             handlePaymentButtonClick(cartPage.calculateSubtotal(), true, false, false);
         }
     }
 
     private void showCheckPopup() {
-        // Show a pop-up for entering check details
         JPanel panel = new JPanel(new GridLayout(4, 2));
         panel.add(new JLabel("Account Number:"));
         JTextField accountNumberField = new JTextField();
@@ -290,7 +258,6 @@ public class PaymentPage extends JFrame {
                 "Enter Check Details", JOptionPane.OK_CANCEL_OPTION);
 
         if (result == JOptionPane.OK_OPTION) {
-            // Process check details
             handlePaymentButtonClick(cartPage.calculateSubtotal(), false, false, true);
         }
     }
@@ -299,19 +266,16 @@ public class PaymentPage extends JFrame {
         JPanel paymentOptionsPanel = new JPanel();
         paymentOptionsPanel.setLayout(new GridLayout(3, 1));
 
-        // Payment option 1
         JRadioButton option1 = new JRadioButton("Pay Now With Cash");
         option1.setFont(new Font("Arial", Font.PLAIN, 14));
         option1.addActionListener(e -> showCashPopup());
         paymentOptionsPanel.add(option1);
 
-        // Payment option 2
         JRadioButton option2 = new JRadioButton("Pay Now With Check");
         option2.setFont(new Font("Arial", Font.PLAIN, 14));
         option2.addActionListener(e -> showCheckPopup());
         paymentOptionsPanel.add(option2);
 
-        // Payment option 3
         JRadioButton option3 = new JRadioButton("Pay Now With Card");
         option3.setFont(new Font("Arial", Font.PLAIN, 14));
         option3.addActionListener(e -> showCardPopup());
@@ -329,15 +293,13 @@ public class PaymentPage extends JFrame {
     return cartPage.calculateSubtotal();
 }
     private void handlePaymentButtonClick(double orderTotal, boolean creditCard, boolean payPal, boolean cashOnDelivery) {
-        // Handle payment logic here based on selected options
-        // For simplicity, just display a message
+
         JOptionPane.showMessageDialog(this, "Payment Successful!\nTotal Amount: $" + orderTotal);
     }
 
     public static void main(String[] args) {
 
            Order newOrder = new Order();
-        // Sample cart items
 
         SwingUtilities.invokeLater(() -> {
             CartPage cartPage = new CartPage("John", "doe");

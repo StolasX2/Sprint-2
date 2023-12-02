@@ -31,7 +31,7 @@ public class ClassicsPage extends JFrame {
 
     private void addComponentsToPane(Container pane, String firstName, String lastName, String category) {
         pane.setLayout(new BorderLayout());
-        pane.setBackground(new Color(173, 216, 230)); // Set blue background color
+        pane.setBackground(new Color(173, 216, 230));
 
         // Add the header
         JPanel headerPanel = createHeaderPanel(firstName, lastName);
@@ -119,18 +119,18 @@ public class ClassicsPage extends JFrame {
 
     private JPanel createSizeAndOrderPanel(String pizzaType, double smallPrice, double mediumPrice, double largePrice, double xlPrice) {
         JPanel sizeAndOrderPanel = new JPanel(new GridLayout(2, 1, 5, 5)); // 2 rows, 1 column
-        sizeAndOrderPanel.setBackground(new Color(173, 216, 230)); // Set blue background color
+        sizeAndOrderPanel.setBackground(new Color(173, 216, 230));
 
-        String[] sizes = {"Small", "Medium", "Large", "Extra Large"}; // Added "Extra Large"
+        String[] sizes = {"Small", "Medium", "Large", "Extra Large"};
 
         JButton sizeButton = new JButton("Select Size");
         sizeButton.addActionListener(e -> handleSizeButtonClick(pizzaType, sizes, smallPrice, mediumPrice, largePrice, xlPrice));
-        sizeButton.setBackground(new Color(173, 216, 230)); // Set blue background color
+        sizeButton.setBackground(new Color(173, 216, 230));
         sizeAndOrderPanel.add(sizeButton);
 
         JButton orderButton = new JButton("Add to Order");
         orderButton.addActionListener(e -> handleOrderButtonClick(pizzaType));
-        orderButton.setBackground(new Color(173, 216, 230)); // Set blue background color
+        orderButton.setBackground(new Color(173, 216, 230));
         sizeAndOrderPanel.add(orderButton);
 
         return sizeAndOrderPanel;
@@ -159,7 +159,7 @@ public class ClassicsPage extends JFrame {
                 case "Large":
                     price = largeprice;
                     break;
-                case "Extra Large":  // Change the case to match "Extra Large"
+                case "Extra Large":
                     price = xlprice;
                     break;
                 default:
@@ -173,7 +173,7 @@ public class ClassicsPage extends JFrame {
                     sizeLabel = "XL";
                     break;
                 default:
-                    sizeLabel = selectedSize.substring(0, 1); // Use the first letter for normal sizes
+                    sizeLabel = selectedSize.substring(0, 1);
                     break;
             }
 
@@ -211,7 +211,7 @@ public class ClassicsPage extends JFrame {
     private JPanel createHeaderPanel(String firstName, String lastName) {
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BorderLayout());
-        headerPanel.setBackground(new Color(255, 204, 102)); // Light orange background color
+        headerPanel.setBackground(new Color(255, 204, 102));
 
         // Logo on the left
         ImageIcon logoIcon = new ImageIcon("C:\\Users\\ebend\\OneDrive\\Desktop\\VsCode Projects\\TheUrbanSlice\\gui\\images\\MicrosoftTeams-image.png");
@@ -233,7 +233,7 @@ public class ClassicsPage extends JFrame {
 
         // Navigation buttons on the right
         JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        buttonsPanel.setOpaque(false); // Make the buttonsPanel transparent
+        buttonsPanel.setOpaque(false);
 
         // "Start Your Order" button
         JButton startOrderButton = new JButton("Start Your Order");
@@ -251,7 +251,7 @@ public class ClassicsPage extends JFrame {
         menuButton.addActionListener(e -> {
             MenuPage menuPage = new MenuPage(firstName, lastName);
             menuPage.setVisible(true);
-            ClassicsPage.this.dispose(); // Close the current page
+            ClassicsPage.this.dispose();
         });
         buttonsPanel.add(menuButton);
 
