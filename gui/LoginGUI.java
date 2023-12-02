@@ -71,5 +71,4 @@ public class LoginGUI {
         SignUpDialog signUpDialog = new SignUpDialog(frame);
         signUpDialog.setVisible(true);
     }
-
 }
